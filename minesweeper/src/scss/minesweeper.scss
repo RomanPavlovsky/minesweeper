@@ -1,0 +1,19 @@
+.minesweeper {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  background-color: rgb(71, 116, 101);
+}
+.unit {
+  width: 40px;
+  height: 40px;
+  &_closed {
+    background-color: rgb(94, 60, 20);
+  }
+  &_empty {
+  }
+  &_bomb {
+  }
+}
