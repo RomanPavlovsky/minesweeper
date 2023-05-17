@@ -1,5 +1,5 @@
 export const config = {
-  matrixSize: 10,
-  bombs: 10,
+  matrixSize: 15,
+  bombs: 55,
   theme: 'light',
 };
