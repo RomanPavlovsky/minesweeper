@@ -1,0 +1,216 @@
+.settings {
+  padding-top: 100px;
+  visibility: hidden;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+  &_open {
+    animation: swap-settings 0.3s linear 1;
+    animation-fill-mode: both;
+    animation-direction: alternate;
+  }
+  &_close {
+    animation: swap-settings 0.3s linear 1;
+    animation-fill-mode: both;
+    animation-direction: alternate-reverse;
+  }
+  &__heading {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-size: 26px;
+    color: #ffffff;
+    animation: pause 0.8s linear 1;
+    animation-fill-mode: both;
+  }
+  &__theme {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-size: 16px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+  }
+  &__mines {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-size: 16px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 5px;
+  }
+  &__minefield {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-size: 16px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 5px;
+  }
+}
+.toggle {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  width: 40px;
+  height: 20px;
+  border-radius: 20px;
+  &::before {
+    content: 'Light';
+    position: absolute;
+    top: 0px;
+    left: -50px;
+  }
+  &::after {
+    content: 'Dark';
+    position: absolute;
+    top: 0px;
+    left: +50px;
+  }
+  &__input {
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+  &__custom {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(223, 223, 223, 0.719);
+    border-radius: 20px;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      height: 16px;
+      width: 16px;
+      background-color: #646464;
+      border-radius: 8px;
+      transition: all 0.4s;
+    }
+  }
+  &__input:checked + .toggle__custom {
+    background-color: #646464;
+  }
+  &__input:checked + .toggle__custom::before {
+    transition: transform 0.4s;
+    transform: translateX(19px);
+    background-color: white;
+  }
+}
+.mines {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  width: 120px;
+  &::before {
+    content: '10';
+    position: absolute;
+    top: 5px;
+    left: -25px;
+  }
+  &::after {
+    content: '99';
+    position: absolute;
+    top: 5px;
+    left: 130px;
+  }
+
+  &__line {
+    position: absolute;
+    z-index: -1;
+    background-color: #646464;
+    width: 100%;
+    height: 3px;
+    border-radius: 15px;
+  }
+  &__progress {
+    position: absolute;
+    z-index: -1;
+    background-color: white;
+    height: 3px;
+    border-radius: 15px;
+  }
+  &__input {
+    appearance: none;
+    background-color: white;
+    cursor: pointer;
+    height: 30px;
+    width: 120px;
+    outline: none;
+    background: transparent;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      border: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: white;
+    }
+  }
+}
+.radio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+  &-checkbox {
+    cursor: pointer;
+    &:hover .radio-checkbox__custom::before {
+      opacity: 0.5;
+    }
+    &__input {
+      width: 0;
+      height: 0;
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+    }
+    &__custom {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #646464;
+      vertical-align: text-bottom;
+      &:hover:before {
+        opacity: 0.5;
+      }
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        content: '';
+        width: 15px;
+        height: 15px;
+        background-color: rgb(255, 255, 255);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.1s linear;
+      }
+    }
+    &__input:checked + .radio-checkbox__custom::before {
+      opacity: 1;
+    }
+  }
+}

@@ -1,5 +1,8 @@
 export const config = {
-  matrixSize: 15,
-  bombs: 55,
+  matrixSize: 10,
+  bombs: 25,
   theme: 'light',
+  isMenu: false,
+  isSettings: false,
+  isPause: false,
 };

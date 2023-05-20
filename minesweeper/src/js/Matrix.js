@@ -4,9 +4,9 @@ export class Matrix {
     this.bombs = bombs;
     this.matrix = [];
     this.matrixState = {};
+    this.positionsBombs = [];
   }
   createMatrix(id) {
-    let positionsBombs = [];
     for (let index = 0; index < this.matrixSize; index++) {
       let row = new Array(this.matrixSize);
       row.fill('-');
@@ -16,19 +16,19 @@ export class Matrix {
     const createBombPosition = (max, min) => {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     };
-    while (positionsBombs.length < this.bombs) {
+    while (this.positionsBombs.length < this.bombs) {
       let position = createBombPosition(max, 1);
-      if (position !== Number(id) && !positionsBombs.includes(position)) {
-        positionsBombs.push(position);
+      if (position !== Number(id) && !this.positionsBombs.includes(position)) {
+        this.positionsBombs.push(position);
       }
     }
-    positionsBombs.forEach((elem) => {
+    this.positionsBombs.forEach((elem) => {
       let col = (elem - 1) % this.matrixSize;
       let row = Math.floor((elem - 1) / this.matrixSize);
       this.matrix[row][col] = '+';
     });
 
-    console.log(this.matrix);
+    // console.log(this.matrix);
     this.matrix.map((element, index, array) => {
       for (let i = 0; i < element.length; i++) {
         let count = 0;
@@ -67,7 +67,7 @@ export class Matrix {
     });
   }
 
-  changeState(id) {
+  getCell(id) {
     const openSome = (row, col) => {
       const units = [];
       const id = row * this.matrixSize + col + 1;
@@ -108,9 +108,13 @@ export class Matrix {
     };
     const col = (id - 1) % this.matrixSize;
     const row = Math.floor((id - 1) / this.matrixSize);
-    console.log(this.matrix[row][col]);
     if (this.matrix[row][col] === '+') {
       console.log('game over');
+      const bombs = {};
+      this.positionsBombs.forEach((elem) => {
+        bombs[elem] = 'bomb';
+      });
+      return bombs;
     } else if (this.matrix[row][col] === 0) {
       openSome(row, col);
     } else {

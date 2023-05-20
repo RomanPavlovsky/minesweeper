@@ -1,0 +1,114 @@
+@keyframes dropPlay {
+  0% {
+    opacity: 0;
+    transform: translate(1px, -400px) rotate(45deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-1px, 50px) rotate(-45deg);
+  }
+  70% {
+    transform: translate(0px, -50px) rotate(45deg);
+  }
+  100% {
+    transform: translate(0px, 50px) rotate(0deg);
+  }
+}
+@keyframes dropResult {
+  0% {
+    opacity: 0;
+    transform: translate(1px, -450px) rotate(33deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-1px, 120px) rotate(40deg);
+  }
+  70% {
+    transform: translate(0px, 0px) rotate(-5deg);
+  }
+  100% {
+    transform: translate(0px, 120px) rotate(0deg);
+  }
+}
+@keyframes dropSettings {
+  0% {
+    opacity: 0;
+    transform: translate(100px, -450px) rotate(0deg);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(100px, 145px) rotate(-50deg);
+  }
+  60% {
+    transform: translate(100px, 50px) rotate(50deg);
+  }
+  90% {
+    transform: translate(100px, 145px) rotate(0deg);
+  }
+  100% {
+    transform: translate(110px, 145px) rotate(50deg);
+  }
+}
+@keyframes openMenu {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes closeMenu {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pause {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes swap-menu {
+  0% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-150px);
+  }
+}
+@keyframes swap-settings {
+  0% {
+    transform: translateX(150px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+@keyframes open-settings {
+  0% {
+    transform: translate(110px, 145px) rotate(50deg);
+  }
+  100% {
+    transform: translate(110px, 145px) rotate(-40deg);
+  }
+}
+@keyframes close-settings {
+  0% {
+    transform: translate(110px, 145px) rotate(50deg);
+  }
+  100% {
+    transform: translate(110px, 145px) rotate(140deg);
+  }
+}
