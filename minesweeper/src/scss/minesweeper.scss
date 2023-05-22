@@ -15,28 +15,50 @@
     align-items: center;
   }
   &__count {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    // animation-name: change;
+    // animation-duration: 1s;
+    // animation-iteration-count: infinite;
+    // @keyframes change {
+    //   0% {
+    //     transform: translateY(0px);
+    //   }
+    //   50% {
+    //     transform: translateY(-50px);
+    //   }
+    //   100% {
+    //     transform: translateY(-100px);
+    //   }
+    // }
   }
   &__btn {
     width: 70px;
     height: 70px;
     background: url('./assets/img/set3.png') no-repeat 50% 10%;
-    // background-size: 250%;
-    // animation: spin 2s linear infinite;
-    // animation-fill-mode: both;
-    // @keyframes spin {
-    //   0% {
-    //     transform: rotate(0deg);
-    //   }
-    //   100% {
-    //     transform: rotate(360deg);
-    //   }
-    // }
     &:hover {
       cursor: pointer;
+      opacity: 0.7;
+      // background: url('./assets/img/set3.png') no-repeat 90% 10%;
+    }
+    &_lose {
+      background: url('./assets/img/set3.png') no-repeat 90% 84%;
+    }
+    &_win {
       background: url('./assets/img/set3.png') no-repeat 90% 10%;
+    }
+    &_wait {
+      background: url('./assets/img/set3.png') no-repeat 90% 47%;
     }
   }
   &__timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
   }
   &__minefield {
     padding: 4px;
@@ -98,23 +120,43 @@
     }
 
     &__new-game-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Passion One', cursive;
+      font-size: 20px;
+      color: #ffffff;
+      letter-spacing: 1px;
       cursor: pointer;
       border-radius: 5px;
       width: 120px;
       height: 40px;
-      background-color: red;
+      background-color: rgb(100, 26, 26);
       animation: dropPlay 0.8s linear 1;
       animation-fill-mode: both;
+      &:hover {
+        opacity: 0.7;
+      }
     }
 
     &__result-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Passion One', cursive;
+      font-size: 18px;
+      color: #ffffff;
+      letter-spacing: 1px;
       cursor: pointer;
       border-radius: 5px;
       width: 130px;
       height: 30px;
-      background-color: rgb(0, 60, 255);
+      background-color: rgb(18, 109, 116);
       animation: dropResult 0.6s linear 1;
       animation-fill-mode: both;
+      &:hover {
+        opacity: 0.7;
+      }
     }
   }
 
@@ -142,7 +184,6 @@
     }
   }
 }
-
 .unit {
   user-select: none;
   display: flex;
@@ -157,17 +198,35 @@
     cursor: pointer;
     background-color: #13bd1334;
   }
+  &_flag {
+    cursor: pointer;
+    background: url('./assets/icons/flag.png') no-repeat center;
+    background-size: cover;
+    background-color: #13bd1334;
+  }
   &_empty {
+    background-color: transparent;
   }
   &_value {
-    color: #4eb153;
+    background-color: transparent;
+  }
+  &_fail-bomb {
+    background: url('./assets/icons/1.svg') no-repeat center;
+    background-size: cover;
+    background-color: rgb(255, 0, 0);
   }
   &_bomb {
-    background: url('./assets/icons/test_bomb.svg') no-repeat center;
-    background-size: 80%;
+    background: url('./assets/icons/1.svg') no-repeat center;
+    background-size: cover;
     background-color: rgb(235, 194, 12);
+    animation: shake 0.8s;
+    animation-iteration-count: 1;
   }
   &:hover {
     background-color: rgb(16, 99, 16);
   }
+}
+.snake {
+  animation: shake 1.3s;
+  animation-iteration-count: 1;
 }

@@ -4,15 +4,27 @@ export class Unit {
     this.id = id;
   }
   createUnit() {
-    return `<div class="unit unit_closed" id="${this.id}"></div>`;
+    return `<div class="unit unit_closed" data-type="${this.type}" id="${this.id}"></div>`;
+  }
+  putFlag() {
+    document.getElementById(this.id).classList.remove('unit_closed');
+    document.getElementById(this.id).classList.add('unit_flag');
+    document.getElementById(this.id).dataset.type = 'flag';
+  }
+  downFlag() {
+    document.getElementById(this.id).classList.remove('unit_flag');
+    document.getElementById(this.id).classList.add('unit_closed');
+    document.getElementById(this.id).dataset.type = 'closed';
   }
   openUnit(value) {
     document.getElementById(this.id).classList.remove('unit_closed');
     if (this.type === 'empty') {
       document.getElementById(this.id).classList.add('unit_empty');
+      document.getElementById(this.id).dataset.type = 'empty';
     } else if (this.type === 'value') {
       document.getElementById(this.id).classList.add('unit_value');
       document.getElementById(this.id).textContent = value;
+      document.getElementById(this.id).dataset.type = 'value';
       if (value === 1) {
         document.getElementById(this.id).style.color = '#ffffff';
       }
@@ -37,9 +49,11 @@ export class Unit {
       if (value === 8) {
         document.getElementById(this.id).style.color = '#611212';
       }
-      console.log(typeof value);
     } else if (this.type === 'bomb') {
-      document.getElementById(this.id).classList.add('unit_bomb');
+      document.getElementById(value).classList.add('unit_fail-bomb');
+      if (this.id !== value) {
+        document.getElementById(this.id).classList.add('unit_bomb');
+      }
     }
   }
 }
