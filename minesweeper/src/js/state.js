@@ -1,6 +1,6 @@
 export const state = {
   settings: {
-    matrixSize: 25,
+    matrixSize: 10,
     bombs: 10,
     theme: 'light',
     sound: true,
