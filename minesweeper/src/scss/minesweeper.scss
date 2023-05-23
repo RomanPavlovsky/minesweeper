@@ -20,20 +20,6 @@
     justify-content: center;
     align-items: center;
     width: 90px;
-    // animation-name: change;
-    // animation-duration: 1s;
-    // animation-iteration-count: infinite;
-    // @keyframes change {
-    //   0% {
-    //     transform: translateY(0px);
-    //   }
-    //   50% {
-    //     transform: translateY(-50px);
-    //   }
-    //   100% {
-    //     transform: translateY(-100px);
-    //   }
-    // }
   }
   &__btn {
     width: 70px;
@@ -42,7 +28,6 @@
     &:hover {
       cursor: pointer;
       opacity: 0.7;
-      // background: url('./assets/img/set3.png') no-repeat 90% 10%;
     }
     &_lose {
       background: url('./assets/img/set3.png') no-repeat 90% 84%;
@@ -229,4 +214,47 @@
 .snake {
   animation: shake 1.3s;
   animation-iteration-count: 1;
+}
+.result {
+  padding-left: 20px;
+  text-align: center;
+  font-family: 'Passion One', cursive;
+  color: #ffffff;
+  letter-spacing: 1px;
+  position: absolute;
+  z-index: 2;
+  margin: 0 auto;
+  width: 400px;
+  height: 400px;
+  background-color: rgb(18, 109, 116);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 50px;
+  &_open {
+    animation: openResults 0.2s linear 1;
+    animation-fill-mode: both;
+  }
+  &_close {
+    animation: closeResults 0.2s linear 1;
+    animation-fill-mode: both;
+  }
+  &__empty {
+    font-size: 28px;
+  }
+  &__heading {
+    text-align: center;
+    font-family: 'Passion One', cursive;
+    font-size: 28px;
+    color: #ffffff;
+    letter-spacing: 1px;
+  }
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-row-gap: 5px;
+  }
 }

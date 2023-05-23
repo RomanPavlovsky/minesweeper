@@ -13,7 +13,7 @@ const action = () => {
   const settingsMenu = document.querySelector('.settings');
   const settingsButton = document.querySelector('.settings-btn');
   const newGameButton = document.querySelector('.minesweeper__new-game-btn');
-  const resultsButton = document.querySelector('.minesweeper__result-btn');
+  const resultsButton = document.querySelector('.menu__result-btn');
   const themeToggle = document.querySelector('.toggle__input');
   const minefieldSize = document.querySelector('.radio');
 
@@ -24,8 +24,50 @@ const action = () => {
   let setTime;
   const flags = new Set();
   const newGame = () => {};
-
+  const showResults = (e) => {
+    e.stopPropagation();
+    const resultModal = `<div class="result"></div>`;
+    document.body.insertAdjacentHTML('beforeend', resultModal);
+    document.querySelector('.result').classList.remove('result_close');
+    document.querySelector('.result').classList.add('result_open');
+    menu.addEventListener('click', closeResults);
+    if (!!localStorage.getItem('results')) {
+      document.querySelector(
+        '.result'
+      ).innerHTML = `<div class="result__heading">You Results:</div>
+        <div class="result__container">
+        <div class='result__date'>Date:</div>
+                        <div class='result__count'>Clicks:</div>
+                          <div class='result__time'>Time:</div>
+        </div>`;
+      let results = Object.entries(JSON.parse(localStorage.getItem('results')));
+      results.forEach((element) => {
+        let results = `<div class='result__date'>${element[1].date}</div>
+                        <div class='result__count'>${element[1].click}</div>
+                          <div class='result__time'>${element[1].time}</div>`;
+        document
+          .querySelector('.result__container')
+          .insertAdjacentHTML('beforeend', results);
+      });
+    } else {
+      document.querySelector('.result').innerHTML = `<div class="result__empty">
+          haven't results :( </br>
+          try to win 
+      </div>`;
+    }
+  };
+  const closeResults = () => {
+    menu.removeEventListener('click', closeResults);
+    document.querySelector('.result').classList.remove('result_open');
+    document.querySelector('.result').classList.add('result_close');
+    setTimeout(() => {
+      document.querySelector('.result').remove();
+    }, 200);
+  };
   const win = () => {
+    minefield.removeEventListener('click', firstMove);
+    minefield.removeEventListener('click', move);
+    minesweeper.removeEventListener('mouseup', putFlag);
     pauseButton.classList.add('minesweeper__btn_win');
     document.querySelector('.menu__pause-header').textContent = 'WIN';
     if (!state.isMenu) {
@@ -37,17 +79,16 @@ const action = () => {
     }
   };
   const lose = () => {
+    pauseButton.removeEventListener('click', openMenu);
     pauseButton.classList.add('minesweeper__btn_lose');
     document.querySelector('.menu__pause-header').textContent = 'LOSE';
     setTimeout(() => {
       if (!state.isMenu) {
         clearInterval(setTime);
         menu.classList.add('minesweeper__menu_open');
-        setTimeout(() => {
-          pauseButton.addEventListener('click', openMenu);
-        }, 500);
+        pauseButton.addEventListener('click', openMenu);
       }
-    }, 3000);
+    }, 2000);
   };
   const checkWin = () => {
     let cells = document.querySelectorAll('.unit');
@@ -70,29 +111,28 @@ const action = () => {
         if (count === idArr.length) {
           state.isWin = true;
           win();
+          saveResults();
         }
       }
-
-      console.log(matrix);
     }
   };
   const putFlag = (e) => {
     if (e.button === 2 && e.target.closest('.unit_closed')) {
-      const unit = new Unit(event.target.id, 'flag');
+      const unit = new Unit(e.target.id, 'flag');
       unit.putFlag();
       if (matrix === undefined) {
-        flags.add(event.target.id);
+        flags.add(e.target.id);
       } else {
         console.log(matrix);
-        matrix.addFlags(`${event.target.id}`);
+        matrix.addFlags(`${e.target.id}`);
       }
     } else if (e.button === 2 && e.target.closest('.unit_flag')) {
-      const unit = new Unit(event.target.id, 'closed');
+      const unit = new Unit(e.target.id, 'closed');
       unit.downFlag();
       if (matrix === undefined) {
-        flags.delete(event.target.id);
+        flags.delete(e.target.id);
       } else {
-        matrix.deleteFlags(`${event.target.id}`);
+        matrix.deleteFlags(`${e.target.id}`);
       }
     }
   };
@@ -121,7 +161,54 @@ const action = () => {
     }
   };
 
-  const saveResults = () => {};
+  const saveResults = () => {
+    let date = new Date();
+    let saveDate = `${date.getDate()}.${
+      date.getMonth() + 1 < 10
+        ? '0' + (date.getMonth() + 1)
+        : date.getMonth() + 1
+    }.${date.getFullYear()} ${
+      date.getHours() < 10 ? '0' + date.getHours() : date.getHours()
+    }:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`;
+    if (!localStorage.getItem('results')) {
+      const results = {
+        1: { click: state.count, time: state.time, date: saveDate },
+      };
+      localStorage.setItem('results', JSON.stringify(results));
+    } else {
+      let results = Object.entries(JSON.parse(localStorage.getItem('results')));
+      const length = results.length;
+      if (length === 10) {
+        results = results.map((elem) => {
+          return [elem[0] - 1, elem[1]];
+        });
+        results = results.slice(1, 11);
+        results.push([
+          10,
+          { click: state.count, time: state.time, date: saveDate },
+        ]);
+        localStorage.setItem(
+          'results',
+          JSON.stringify(Object.fromEntries(results))
+        );
+      } else {
+        results.push([
+          length + 1,
+          { click: state.count, time: state.time, date: saveDate },
+        ]);
+        localStorage.setItem(
+          'results',
+          JSON.stringify(Object.fromEntries(results))
+        );
+      }
+    }
+
+    let results = [
+      [1, { time: 1, click: 2 }],
+      [2, { time: 5, click: 3 }],
+    ];
+    let json = JSON.stringify(Object.fromEntries(results));
+  };
   const changeMinefieldSize = (e) => {
     if (e.target.closest('.radio-checkbox__input')) {
       e.target.setAttribute('checked', 'checked');
@@ -307,6 +394,7 @@ const action = () => {
 
   minefield.addEventListener('mousedown', addWaitSmile);
   minefield.addEventListener('mouseup', removeWaitSmile);
+  resultsButton.addEventListener('click', showResults);
 };
 
 export default action;
