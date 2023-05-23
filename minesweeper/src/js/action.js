@@ -1,6 +1,7 @@
 import { state } from './state';
 import { Matrix } from './Matrix';
 import { Unit } from './Unit';
+import { Sound } from './Sound';
 
 const action = () => {
   const minesweeper = document.querySelector('.minesweeper');
@@ -17,6 +18,14 @@ const action = () => {
   const themeToggle = document.querySelector('.toggle__input');
   const minefieldSize = document.querySelector('.radio');
 
+  let soundsArr = [
+    new Sound('open'),
+    new Sound('flag'),
+    new Sound('lose'),
+    new Sound('win'),
+    new Sound('boom'),
+  ];
+  let [openAudio, flagAudio, loseAudio, winAudio, boomAudio] = soundsArr;
   let isFirstMove = true;
   let matrix;
   let count = Number(state.count);
@@ -65,6 +74,7 @@ const action = () => {
     }, 200);
   };
   const win = () => {
+    winAudio.playback();
     minefield.removeEventListener('click', firstMove);
     minefield.removeEventListener('click', move);
     minesweeper.removeEventListener('mouseup', putFlag);
@@ -85,6 +95,7 @@ const action = () => {
     setTimeout(() => {
       if (!state.isMenu) {
         clearInterval(setTime);
+        loseAudio.playback();
         menu.classList.add('minesweeper__menu_open');
         pauseButton.addEventListener('click', openMenu);
       }
@@ -118,15 +129,16 @@ const action = () => {
   };
   const putFlag = (e) => {
     if (e.button === 2 && e.target.closest('.unit_closed')) {
+      flagAudio.playback();
       const unit = new Unit(e.target.id, 'flag');
       unit.putFlag();
       if (matrix === undefined) {
         flags.add(e.target.id);
       } else {
-        console.log(matrix);
         matrix.addFlags(`${e.target.id}`);
       }
     } else if (e.button === 2 && e.target.closest('.unit_flag')) {
+      flagAudio.playback();
       const unit = new Unit(e.target.id, 'closed');
       unit.downFlag();
       if (matrix === undefined) {
@@ -320,7 +332,7 @@ const action = () => {
   };
 
   const firstMove = (event) => {
-    if (event.target.closest('.unit') && isFirstMove !== false) {
+    if (event.target.closest('.unit_closed') && isFirstMove === true) {
       isFirstMove = false;
       state.isStartGame = true;
       setTime = setInterval(startTimer, 1000);
@@ -335,6 +347,7 @@ const action = () => {
   const move = (event) => {
     let delay = 0;
     if (event.target.closest('.unit_closed') && isFirstMove === false) {
+      openAudio.playback();
       clickCount();
       const response = matrix.getCell(event.target.id);
       // console.log(Object.entries(response));
@@ -346,6 +359,7 @@ const action = () => {
             unit.openUnit();
           }
         } else if (elem[1] === 'bomb') {
+          boomAudio.playback();
           state.isLose = true;
           lose();
           clearInterval(setTime);
@@ -357,7 +371,9 @@ const action = () => {
             const unit = new Unit(elem[0], 'bomb');
             unit.openUnit(event.target.id);
           }, delay);
-          delay += 200;
+          delay += 150;
+
+          console.log(delay);
         } else {
           if (cell.dataset.type !== 'flag') {
             const unit = new Unit(elem[0], 'value');
@@ -368,12 +384,17 @@ const action = () => {
       checkWin();
     }
   };
-  const addWaitSmile = () => {
-    if (!state.isLose && !state.isWin) {
+  const smileDown = (e) => {
+    if (
+      !state.isLose &&
+      !state.isWin &&
+      e.target.closest('.unit_closed') &&
+      e.button !== 2
+    ) {
       pauseButton.classList.add('minesweeper__btn_wait');
     }
   };
-  const removeWaitSmile = (e) => {
+  const smileUp = (e) => {
     if (!state.isLose && !state.isWin) {
       pauseButton.classList.remove('minesweeper__btn_wait');
     }
@@ -392,8 +413,8 @@ const action = () => {
   });
   minesweeper.addEventListener('mouseup', putFlag);
 
-  minefield.addEventListener('mousedown', addWaitSmile);
-  minefield.addEventListener('mouseup', removeWaitSmile);
+  minefield.addEventListener('mousedown', smileDown);
+  minefield.addEventListener('mouseup', smileUp);
   resultsButton.addEventListener('click', showResults);
 };
 

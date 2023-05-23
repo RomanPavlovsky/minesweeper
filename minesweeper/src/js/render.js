@@ -1,5 +1,6 @@
 import { state } from './state';
 import { Unit } from './Unit';
+
 const render = () => {
   document.body.innerHTML = `<div class="minesweeper">
     <div class="minesweeper__header">

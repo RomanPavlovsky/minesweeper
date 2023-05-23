@@ -186,7 +186,7 @@
   &_flag {
     cursor: pointer;
     background: url('./assets/icons/flag.png') no-repeat center;
-    background-size: cover;
+    background-size: contain;
     background-color: #13bd1334;
   }
   &_empty {
