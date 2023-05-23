@@ -5,6 +5,7 @@ import { Sound } from './Sound';
 
 const action = () => {
   const minesweeper = document.querySelector('.minesweeper');
+  const resultTitle = document.querySelector('.minesweeper__result');
   const minefield = document.querySelector('.minesweeper__minefield');
   const pauseButton = document.querySelector('.minesweeper__btn');
   const counter = document.querySelector('.minesweeper__count');
@@ -18,7 +19,7 @@ const action = () => {
   const themeToggle = document.querySelector('.toggle__input');
   const minefieldSize = document.querySelector('.radio');
 
-  let soundsArr = [
+  const soundsArr = [
     new Sound('open'),
     new Sound('flag'),
     new Sound('lose'),
@@ -41,9 +42,9 @@ const action = () => {
     document.querySelector('.result').classList.add('result_open');
     menu.addEventListener('click', closeResults);
     if (!!localStorage.getItem('results')) {
-      document.querySelector(
-        '.result'
-      ).innerHTML = `<div class="result__heading">You Results:</div>
+      document.querySelector('.result').innerHTML = `
+      <div class="result__close-btn"></div>
+      <div class="result__heading">You Results:</div>
         <div class="result__container">
         <div class='result__date'>Date:</div>
                         <div class='result__count'>Clicks:</div>
@@ -59,14 +60,22 @@ const action = () => {
           .insertAdjacentHTML('beforeend', results);
       });
     } else {
-      document.querySelector('.result').innerHTML = `<div class="result__empty">
+      document.querySelector('.result').innerHTML = `
+      <div class="result__close-btn"></div>
+      <div class="result__empty">
           haven't results :( </br>
           try to win 
       </div>`;
     }
+    document
+      .querySelector('.result__close-btn')
+      .addEventListener('click', closeResults);
   };
   const closeResults = () => {
     menu.removeEventListener('click', closeResults);
+    document
+      .querySelector('.result__close-btn')
+      .removeEventListener('click', closeResults);
     document.querySelector('.result').classList.remove('result_open');
     document.querySelector('.result').classList.add('result_close');
     setTimeout(() => {
@@ -81,6 +90,8 @@ const action = () => {
     pauseButton.classList.add('minesweeper__btn_win');
     document.querySelector('.menu__pause-header').textContent = 'WIN';
     if (!state.isMenu) {
+      resultTitle.innerHTML = `Hooray! <br/> You found all mines in ${time} seconds <br/> and ${count} moves`;
+      resultTitle.classList.add('minesweeper__result_open');
       clearInterval(setTime);
       menu.classList.add('minesweeper__menu_open');
       setTimeout(() => {
@@ -96,6 +107,8 @@ const action = () => {
       if (!state.isMenu) {
         clearInterval(setTime);
         loseAudio.playback();
+        resultTitle.innerHTML = `Game over. Try again`;
+        resultTitle.classList.add('minesweeper__result_open');
         menu.classList.add('minesweeper__menu_open');
         pauseButton.addEventListener('click', openMenu);
       }

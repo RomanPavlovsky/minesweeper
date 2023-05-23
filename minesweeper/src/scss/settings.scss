@@ -1,13 +1,13 @@
 .settings {
-  padding-top: 100px;
+  height: 250px;
   visibility: hidden;
-  height: 100%;
   position: absolute;
+  top: 480px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  row-gap: 20px;
+
   &_open {
     animation: swap-settings 0.3s linear 1;
     animation-fill-mode: both;

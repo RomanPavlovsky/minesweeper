@@ -3,6 +3,7 @@ import { Unit } from './Unit';
 
 const render = () => {
   document.body.innerHTML = `<div class="minesweeper">
+    <div class="minesweeper__result"></div>
     <div class="minesweeper__header">
       <div class="minesweeper__count">${state.count}</div>
       <div class="minesweeper__btn"></div>

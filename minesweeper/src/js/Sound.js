@@ -6,7 +6,6 @@ import loseAudio from '../assets/audio/lose.mp3';
 export class Sound {
   constructor(type) {
     this.type = type;
-
     if (type === 'flag') {
       this.audio = new Audio();
       this.audio.src = flagAudio;

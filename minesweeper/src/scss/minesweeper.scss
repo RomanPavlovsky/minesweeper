@@ -1,5 +1,30 @@
 @import './animation.scss';
+
 .minesweeper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  &__result {
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Passion One', cursive;
+    font-size: 28px;
+    color: #ffffff;
+    letter-spacing: 1px;
+    height: 100px;
+
+    &_open {
+      position: relative;
+      z-index: 2;
+      visibility: visible;
+      animation: openResults 0.5s linear 1;
+      animation-fill-mode: both;
+    }
+  }
   &__header {
     position: relative;
     z-index: 2;
@@ -77,11 +102,12 @@
     animation-fill-mode: both;
   }
   .menu {
-    height: 100%;
+    height: 250px;
     position: absolute;
+    top: 480px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     &_open {
       animation: swap-menu 0.3s linear 1;
@@ -96,10 +122,8 @@
     &__pause-header {
       letter-spacing: 2.5px;
       font-family: 'Passion One', cursive;
-      font-size: 26px;
+      font-size: 28px;
       color: #ffffff;
-      position: relative;
-      top: -10px;
       animation: pause 0.8s linear 1;
       animation-fill-mode: both;
     }
@@ -222,17 +246,31 @@
   color: #ffffff;
   letter-spacing: 1px;
   position: absolute;
+  top: 400px;
   z-index: 2;
   margin: 0 auto;
   width: 400px;
   height: 400px;
   background-color: rgb(18, 109, 116);
-  border-radius: 15px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   row-gap: 50px;
+  &__close-btn {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    top: 0px;
+    right: 0px;
+    position: absolute;
+    background: url('./assets/icons/close-bold.svg') no-repeat center;
+    opacity: 0.7;
+    &:hover {
+      opacity: 1;
+    }
+  }
   &_open {
     animation: openResults 0.2s linear 1;
     animation-fill-mode: both;
