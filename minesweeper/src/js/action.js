@@ -11,10 +11,11 @@ const action = () => {
   const counter = document.querySelector('.minesweeper__count');
   const timer = document.querySelector('.minesweeper__timer');
   const menu = document.querySelector('.minesweeper__menu');
+  const menuHeading = document.querySelector('.menu__pause-heading');
   const menuContainer = document.querySelector('.menu');
   const settingsMenu = document.querySelector('.settings');
   const settingsButton = document.querySelector('.settings-btn');
-  const newGameButton = document.querySelector('.minesweeper__new-game-btn');
+  const newGameButton = document.querySelector('.menu__new-game-btn');
   const resultsButton = document.querySelector('.menu__result-btn');
   const themeToggle = document.querySelector('.toggle__input');
   const minefieldSize = document.querySelector('.radio');
@@ -26,6 +27,7 @@ const action = () => {
     new Sound('win'),
     new Sound('boom'),
   ];
+
   let [openAudio, flagAudio, loseAudio, winAudio, boomAudio] = soundsArr;
   let isFirstMove = true;
   let matrix;
@@ -37,7 +39,9 @@ const action = () => {
   const showResults = (e) => {
     e.stopPropagation();
     const resultModal = `<div class="result"></div>`;
-    document.body.insertAdjacentHTML('beforeend', resultModal);
+    document
+      .querySelector('.minesweeper__header')
+      .insertAdjacentHTML('beforeend', resultModal);
     document.querySelector('.result').classList.remove('result_close');
     document.querySelector('.result').classList.add('result_open');
     menu.addEventListener('click', closeResults);
@@ -88,28 +92,28 @@ const action = () => {
     minefield.removeEventListener('click', move);
     minesweeper.removeEventListener('mouseup', putFlag);
     pauseButton.classList.add('minesweeper__btn_win');
-    document.querySelector('.menu__pause-header').textContent = 'WIN';
+    document.querySelector('.menu__pause-heading').textContent = 'WIN';
     if (!state.isMenu) {
       resultTitle.innerHTML = `Hooray! <br/> You found all mines in ${time} seconds <br/> and ${count} moves`;
       resultTitle.classList.add('minesweeper__result_open');
       clearInterval(setTime);
-      menu.classList.add('minesweeper__menu_open');
+      openMenu();
       setTimeout(() => {
         pauseButton.addEventListener('click', openMenu);
-      }, 500);
+      }, 300);
     }
   };
   const lose = () => {
     pauseButton.removeEventListener('click', openMenu);
     pauseButton.classList.add('minesweeper__btn_lose');
-    document.querySelector('.menu__pause-header').textContent = 'LOSE';
+    document.querySelector('.menu__pause-heading').textContent = 'LOSE';
     setTimeout(() => {
       if (!state.isMenu) {
         clearInterval(setTime);
         loseAudio.playback();
         resultTitle.innerHTML = `Game over. Try again`;
         resultTitle.classList.add('minesweeper__result_open');
-        menu.classList.add('minesweeper__menu_open');
+        openMenu();
         pauseButton.addEventListener('click', openMenu);
       }
     }, 2000);
@@ -288,29 +292,29 @@ const action = () => {
     if (!state.isSettings) {
       document.querySelector('.toggle').style.display = 'block';
       state.isSettings = true;
-      menuContainer.classList.add('menu_close');
-      settingsButton.classList.remove('settings-btn_close');
-      settingsButton.classList.add('settings-btn_open');
+      menuContainer.classList.add('menu_left');
+      settingsButton.classList.remove('settings-btn_right');
+      settingsButton.classList.add('settings-btn_left');
       settingsMenu.style.visibility = 'visible';
-      settingsMenu.classList.add('settings_open');
+      settingsMenu.classList.add('settings_left');
       setTimeout(() => {
         menuContainer.style.visibility = 'hidden';
-        settingsMenu.classList.remove('settings_open');
-        menuContainer.classList.remove('menu_close');
+        settingsMenu.classList.remove('settings_left');
+        menuContainer.classList.remove('menu_left');
         settingsButton.addEventListener('click', openSettings);
       }, 300);
     } else {
       state.isSettings = false;
       menuContainer.style.visibility = 'visible';
-      menuContainer.classList.add('menu_open');
-      settingsButton.classList.remove('settings-btn_open');
-      settingsButton.classList.add('settings-btn_close');
-      settingsMenu.classList.add('settings_close');
+      menuContainer.classList.add('menu_right');
+      settingsButton.classList.remove('settings-btn_left');
+      settingsButton.classList.add('settings-btn_right');
+      settingsMenu.classList.add('settings_right');
       setTimeout(() => {
         document.querySelector('.toggle').style.display = 'none';
         settingsMenu.style.visibility = 'hidden';
-        menuContainer.classList.remove('menu_open');
-        settingsMenu.classList.remove('settings_close');
+        menuContainer.classList.remove('menu_right');
+        settingsMenu.classList.remove('settings_right');
         settingsButton.addEventListener('click', openSettings);
       }, 300);
     }
@@ -319,23 +323,44 @@ const action = () => {
   const openMenu = () => {
     state.isSettings = false;
     pauseButton.removeEventListener('click', openMenu);
-    if (state.isMenu && state.isStartGame && !state.isLose) {
+    if (state.isMenu && state.isStartGame && !state.isLose && !state.isWin) {
       setTime = setInterval(startTimer, 1000);
     }
     if (state.isMenu) {
       state.isMenu = false;
       menu.classList.remove('minesweeper__menu_open');
       menu.classList.add('minesweeper__menu_close');
+      newGameButton.classList.add('menu__new-game-btn_close');
+      resultsButton.classList.add('menu__result-btn_close');
+      menuHeading.classList.add('menu__pause-heading_close');
+      settingsButton.classList.add('settings-btn_close');
+      settingsMenu.classList.add('settings_close');
       setTimeout(() => {
         menu.classList.remove('minesweeper__menu_close');
         pauseButton.addEventListener('click', openMenu);
-        menuContainer.style.visibility = 'visible';
-        settingsMenu.style.visibility = 'hidden';
-        settingsButton.classList.remove('settings-btn_open');
+        menuContainer.style.visibility = 'hidden';
         settingsButton.classList.remove('settings-btn_close');
+        settingsButton.classList.remove('settings-btn_open');
+        newGameButton.classList.remove('menu__new-game-btn_open');
+        resultsButton.classList.remove('menu__result-btn_open');
+        newGameButton.classList.remove('menu__new-game-btn_close');
+        resultsButton.classList.remove('menu__result-btn_close');
+        menuHeading.classList.remove('menu__pause-heading_close');
+        menuHeading.classList.remove('menu__pause-heading_open');
+        settingsMenu.classList.remove('settings_close');
+        settingsMenu.style.visibility = 'hidden';
+        settingsButton.style.visibility = 'hidden';
+        settingsButton.classList.remove('settings-btn_left');
+        settingsButton.classList.remove('settings-btn_right');
       }, 400);
     } else {
       state.isMenu = true;
+      menuContainer.style.visibility = 'visible';
+      newGameButton.classList.add('menu__new-game-btn_open');
+      resultsButton.classList.add('menu__result-btn_open');
+      menuHeading.classList.add('menu__pause-heading_open');
+      settingsButton.classList.add('settings-btn_open');
+      settingsButton.style.visibility = 'visible';
       clearInterval(setTime);
       menu.classList.add('minesweeper__menu_open');
       setTimeout(() => {

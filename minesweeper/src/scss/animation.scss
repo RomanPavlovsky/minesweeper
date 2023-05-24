@@ -37,16 +37,26 @@
   }
   30% {
     opacity: 1;
-    transform: translate(100px, 194px) rotate(-50deg);
+    transform: translate(100px, 300px) rotate(-50deg);
   }
   60% {
     transform: translate(100px, 100px) rotate(50deg);
   }
   90% {
-    transform: translate(100px, 194px) rotate(0deg);
+    transform: translate(100px, 300px) rotate(0deg);
   }
   100% {
-    transform: translate(115px, 194px) rotate(40deg);
+    transform: translate(115px, 300px) rotate(40deg);
+  }
+}
+@keyframes closeSettingsBtn {
+  0% {
+    opacity: 1;
+    transform: translate(115px, 300px) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(115px, 300px) rotate(-50deg);
   }
 }
 @keyframes openMenu {
@@ -65,7 +75,7 @@
     opacity: 0;
   }
 }
-@keyframes pause {
+@keyframes pause_open {
   0% {
     opacity: 0;
   }
@@ -98,18 +108,18 @@
 }
 @keyframes open-settings {
   0% {
-    transform: translate(115px, 194px) rotate(50deg);
+    transform: translate(115px, 300px) rotate(50deg);
   }
   100% {
-    transform: translate(115px, 194px) rotate(-40deg);
+    transform: translate(115px, 300px) rotate(-40deg);
   }
 }
 @keyframes close-settings {
   0% {
-    transform: translate(115px, 194px) rotate(50deg);
+    transform: translate(115px, 300px) rotate(50deg);
   }
   100% {
-    transform: translate(115px, 194px) rotate(140deg);
+    transform: translate(115px, 300px) rotate(140deg);
   }
 }
 @keyframes shake {

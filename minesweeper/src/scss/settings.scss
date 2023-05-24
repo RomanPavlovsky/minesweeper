@@ -2,18 +2,23 @@
   height: 250px;
   visibility: hidden;
   position: absolute;
-  top: 480px;
+  top: 110px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
-  &_open {
+  &_close {
+    animation: closeMenu 0.3s linear 1;
+    animation-fill-mode: both;
+  }
+
+  &_left {
     animation: swap-settings 0.3s linear 1;
     animation-fill-mode: both;
     animation-direction: alternate;
   }
-  &_close {
+  &_right {
     animation: swap-settings 0.3s linear 1;
     animation-fill-mode: both;
     animation-direction: alternate-reverse;

@@ -5,18 +5,12 @@ const render = () => {
   document.body.innerHTML = `<div class="minesweeper">
     <div class="minesweeper__result"></div>
     <div class="minesweeper__header">
-      <div class="minesweeper__count">${state.count}</div>
-      <div class="minesweeper__btn"></div>
-      <div class="minesweeper__timer">000</div>
-    </div>
-    <div class="minesweeper__minefield"></div>
-    <div class="minesweeper__menu">
-      <div class="menu">
-        <div class="menu__pause-header">PAUSE</div>
-        <div class="menu__new-game-btn">New Game</div>
-        <div class="menu__result-btn">last 10 results</div>
-      </div>
-      <div class="settings">
+    <div class="menu">
+    <div class="menu__pause-heading">PAUSE</div>
+    <div class="menu__new-game-btn">New Game</div>
+    <div class="menu__result-btn">last 10 results</div>
+  </div>
+  <div class="settings">
         <div class="settings__heading">SETTINGS</div>
         <div class="settings__theme">
           <div class="heading">Theme</div>
@@ -55,6 +49,12 @@ const render = () => {
         </div>
       </div>
       <div class="settings-btn"></div>
+      <div class="minesweeper__count">${state.count}</div>
+      <div class="minesweeper__btn"></div>
+      <div class="minesweeper__timer">000</div>
+    </div>
+    <div class="minesweeper__minefield"></div>
+    <div class="minesweeper__menu">
     </div>
   </div>`;
   const mineSweeper = document.querySelector('.minesweeper__minefield');
