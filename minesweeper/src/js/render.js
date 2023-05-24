@@ -64,7 +64,9 @@ const render = () => {
           <div class="mines__heading">Mines: ${state.settings.bombs}</div>
           <div class="mines">
             <div class="mines__line"></div>
-            <input class="mines__input" type="range" min="10" max="99" value="${state.settings.bombs}" step="1" />
+            <input class="mines__input" type="range" min="10" max="99" value="${
+              state.settings.bombs
+            }" step="1" />
             <div class="mines__progress"></div>
           </div>
         </div>
@@ -89,7 +91,11 @@ const render = () => {
       </div>
     </div>
     <div class="settings-btn"></div>
-    <div class="minesweeper__count">${state.count}</div>
+    <div class="minesweeper__count">${
+      localStorage.getItem('saveGame') !== null
+        ? JSON.parse(localStorage.getItem('saveGame')).count
+        : state.count
+    }</div>
     <div class="minesweeper__btn"></div>
     <div class="minesweeper__timer">000</div>
   </div>
@@ -115,7 +121,6 @@ const render = () => {
   const renderLvl = () => {
     const sizeInputs = document.querySelectorAll('.radio-checkbox__input');
     for (const input of sizeInputs) {
-      console.log(input);
       if (state.settings.isCustom === true && input.value === 'custom') {
         input.checked = 'checked';
       } else if (state.settings.matrixSize === Number(input.value)) {
@@ -153,9 +158,27 @@ const render = () => {
     mineSweeper.style['grid-template-columns'] = 'repeat(25, 1fr)';
     mineSweeper.style['grid-template-rows'] = 'repeat(25, 1fr)';
   }
-  for (let index = 1; index < state.settings.matrixSize ** 2 + 1; index++) {
-    const unit = new Unit(index).createUnit();
-    mineSweeper.insertAdjacentHTML('beforeend', unit);
+  if (localStorage.getItem('saveGame') !== null) {
+    const loadGame = JSON.parse(localStorage.getItem('saveGame'));
+    console.log(loadGame);
+    for (const loadUnit in loadGame.cells) {
+      const unit = new Unit(Number(loadUnit), loadGame.cells[loadUnit].type);
+      if (loadGame.cells[loadUnit].value !== '') {
+        mineSweeper.insertAdjacentHTML(
+          'beforeend',
+          unit.loadUnit(loadGame.cells[loadUnit].value)
+        );
+        unit.addColor(Number(loadGame.cells[loadUnit].value));
+      } else {
+        mineSweeper.insertAdjacentHTML('beforeend', unit.loadUnit());
+      }
+    }
+    console.log(loadGame);
+  } else {
+    for (let index = 1; index < state.settings.matrixSize ** 2 + 1; index++) {
+      const unit = new Unit(index).createUnit();
+      mineSweeper.insertAdjacentHTML('beforeend', unit);
+    }
   }
 };
 

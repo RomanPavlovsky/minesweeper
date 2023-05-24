@@ -34,6 +34,41 @@ const action = () => {
     new Sound('boom'),
   ];
   let [openAudio, flagAudio, loseAudio, winAudio, boomAudio] = soundsArr;
+
+  let isFirstMove = true;
+  let matrix;
+  let count = Number(state.count);
+  let time = Number(state.time);
+  let setTime;
+  let isStopAnimationBombs = false;
+  const flags = new Set();
+  const startTimer = () => {
+    time += 1;
+    if (time < 10) {
+      state.time = `00${time}`;
+    } else if (time >= 10 && time < 100) {
+      state.time = `0${time}`;
+    } else if (time >= 100) {
+      state.time = `${time}`;
+    }
+    timer.textContent = state.time;
+  };
+
+  if (localStorage.getItem('saveGame') !== null) {
+    state.isStartGame = true;
+    isFirstMove = false;
+    const loadGame = JSON.parse(localStorage.getItem('saveGame'));
+    matrix = new Matrix(loadGame.matrix.matrixSize, loadGame.matrix.bombs);
+    matrix.flagsID = loadGame.matrix.flagsID;
+    matrix.matrix = loadGame.matrix.matrix;
+    matrix.matrixState = loadGame.matrix.matrixState;
+    matrix.positionsBombs = loadGame.matrix.positionsBombs;
+    console.log('state', state);
+    state.count = loadGame.count;
+    count = Number(loadGame.count);
+    time = Number(loadGame.time);
+    setTime = setInterval(startTimer, 1000);
+  }
   const checkSound = () => {
     if (state.settings.sound === true) {
       soundsArr.forEach((elem) => {
@@ -47,14 +82,6 @@ const action = () => {
     }
   };
   checkSound();
-  let isFirstMove = true;
-  let matrix;
-  let count = Number(state.count);
-  let time = Number(state.time);
-  let setTime;
-  let isStopAnimationBombs = false;
-  const flags = new Set();
-
   const saveSettings = () => {
     localStorage.setItem('settings', JSON.stringify(state.settings));
   };
@@ -124,6 +151,7 @@ const action = () => {
     }, 200);
   };
   const win = () => {
+    localStorage.removeItem('saveGame');
     winAudio.playback();
     minefield.removeEventListener('click', firstMove);
     minefield.removeEventListener('click', move);
@@ -141,6 +169,7 @@ const action = () => {
     }
   };
   const lose = () => {
+    localStorage.removeItem('saveGame');
     pauseButton.removeEventListener('click', openMenu);
     pauseButton.classList.add('minesweeper__btn_lose');
     document.querySelector('.menu__pause-heading').textContent = 'LOSE';
@@ -203,10 +232,12 @@ const action = () => {
     }
   };
   const saveGame = () => {
+    console.log('123');
     let cells = document.querySelectorAll('.unit');
     if (!state.isWin && !state.isLose && state.isStartGame) {
+      let matrixCopy = Object.assign(matrix);
       let game = {
-        matrix: matrix,
+        matrix: matrixCopy,
         count: state.count,
         time: state.time,
         cells: {},
@@ -375,17 +406,6 @@ const action = () => {
     }
     counter.textContent = state.count;
   };
-  const startTimer = () => {
-    time += 1;
-    if (time < 10) {
-      state.time = `00${time}`;
-    } else if (time >= 10 && time < 100) {
-      state.time = `0${time}`;
-    } else if (time >= 100) {
-      state.time = `${time}`;
-    }
-    timer.textContent = state.time;
-  };
 
   const openSettings = () => {
     settingsButton.removeEventListener('click', openSettings);
@@ -494,6 +514,7 @@ const action = () => {
   };
 
   const move = (event) => {
+    console.log(matrix);
     let delay = 0;
     if (event.target.closest('.unit_closed') && isFirstMove === false) {
       openAudio.playback();
