@@ -258,6 +258,14 @@ const action = () => {
       e.target.setAttribute('checked', 'checked');
       state.settings.matrixSize = Number(e.target.value);
       saveSettings();
+      newGame();
+    }
+  };
+  const changeBombs = (e) => {
+    if (e.target.closest('.radio-checkbox__input')) {
+      e.target.setAttribute('checked', 'checked');
+      state.settings.matrixSize = Number(e.target.value);
+      saveSettings();
     }
   };
 
@@ -277,6 +285,7 @@ const action = () => {
         document.body.style.background =
           'linear-gradient(210deg, #3f87a6, #ebf8e1, #f69d3c)';
       }
+      saveSettings();
     }
   };
   const clickCount = () => {

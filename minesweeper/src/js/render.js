@@ -84,6 +84,7 @@ const render = () => {
         'linear-gradient(210deg, #3f87a6, #ebf8e1, #f69d3c)';
     }
   };
+  const renderSizeSettings = () => {};
   renderTheme();
   const mineSweeper = document.querySelector('.minesweeper__minefield');
   if (state.settings.matrixSize === 15) {
