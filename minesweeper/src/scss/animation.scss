@@ -49,16 +49,7 @@
     transform: translate(115px, 300px) rotate(40deg);
   }
 }
-@keyframes closeSettingsBtn {
-  0% {
-    opacity: 1;
-    transform: translate(115px, 300px) rotate(0deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(115px, 300px) rotate(-50deg);
-  }
-}
+
 @keyframes openMenu {
   0% {
     opacity: 0;

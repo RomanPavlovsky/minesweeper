@@ -2,6 +2,7 @@ import { state } from './state';
 import { Matrix } from './Matrix';
 import { Unit } from './Unit';
 import { Sound } from './Sound';
+import render from './render';
 
 const action = () => {
   const minesweeper = document.querySelector('.minesweeper');
@@ -35,7 +36,21 @@ const action = () => {
   let time = Number(state.time);
   let setTime;
   const flags = new Set();
-  const newGame = () => {};
+  const newGame = () => {
+    localStorage.removeItem('saveGame');
+    state.isSettings = false;
+    state.isStartGame = false;
+    state.isWin = false;
+    state.isLose = false;
+    state.isMenu = false;
+    state.count = '000';
+    state.time = '000';
+    console.log('newGame ');
+    render();
+    action();
+  };
+
+  const loadSaveGame = () => {};
   const showResults = (e) => {
     e.stopPropagation();
     const resultModal = `<div class="result"></div>`;
@@ -343,11 +358,7 @@ const action = () => {
         settingsButton.classList.remove('settings-btn_open');
         newGameButton.classList.remove('menu__new-game-btn_open');
         resultsButton.classList.remove('menu__result-btn_open');
-        newGameButton.classList.remove('menu__new-game-btn_close');
-        resultsButton.classList.remove('menu__result-btn_close');
-        menuHeading.classList.remove('menu__pause-heading_close');
         menuHeading.classList.remove('menu__pause-heading_open');
-        settingsMenu.classList.remove('settings_close');
         settingsMenu.style.visibility = 'hidden';
         settingsButton.style.visibility = 'hidden';
         settingsButton.classList.remove('settings-btn_left');
@@ -355,6 +366,11 @@ const action = () => {
       }, 400);
     } else {
       state.isMenu = true;
+      settingsMenu.classList.remove('settings_close');
+      newGameButton.classList.remove('menu__new-game-btn_close');
+      resultsButton.classList.remove('menu__result-btn_close');
+      menuHeading.classList.remove('menu__pause-heading_close');
+      settingsButton.classList.remove('settings-btn_close');
       menuContainer.style.visibility = 'visible';
       newGameButton.classList.add('menu__new-game-btn_open');
       resultsButton.classList.add('menu__result-btn_open');
@@ -454,6 +470,7 @@ const action = () => {
   minefield.addEventListener('mousedown', smileDown);
   minefield.addEventListener('mouseup', smileUp);
   resultsButton.addEventListener('click', showResults);
+  newGameButton.addEventListener('click', newGame);
 };
 
 export default action;

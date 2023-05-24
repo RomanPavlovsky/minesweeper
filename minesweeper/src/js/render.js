@@ -2,6 +2,18 @@ import { state } from './state';
 import { Unit } from './Unit';
 
 const render = () => {
+  const loadSettings = () => {
+    if (localStorage.getItem('settings') !== null) {
+      console.log('load settings');
+      const settings = JSON.parse(localStorage.getItem('settings'));
+      console.log('save settings', settings);
+      for (const iterator in settings) {
+        state.settings[iterator] = settings[iterator];
+      }
+    }
+  };
+  loadSettings();
+  console.log('load state', state.settings);
   document.body.innerHTML = `<div class="minesweeper">
     <div class="minesweeper__result"></div>
     <div class="minesweeper__header">
@@ -57,6 +69,22 @@ const render = () => {
     <div class="minesweeper__menu">
     </div>
   </div>`;
+  const menu = document.querySelector('.minesweeper__menu');
+  const themeToggle = document.querySelector('.toggle__input');
+  const renderTheme = () => {
+    if (state.settings.theme === 'dark') {
+      themeToggle.checked = true;
+      menu.style.backgroundColor = '#091b2431';
+      document.body.style.background =
+        'linear-gradient(210deg, #193744, #282b26, #1a1108)';
+    } else if (state.settings.theme === 'light') {
+      themeToggle.checked = false;
+      menu.style.backgroundColor = '#1ecf2731';
+      document.body.style.background =
+        'linear-gradient(210deg, #3f87a6, #ebf8e1, #f69d3c)';
+    }
+  };
+  renderTheme();
   const mineSweeper = document.querySelector('.minesweeper__minefield');
   if (state.settings.matrixSize === 15) {
     mineSweeper.style['grid-template-columns'] = 'repeat(15, 1fr)';

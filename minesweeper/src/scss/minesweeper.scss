@@ -206,8 +206,8 @@
       animation-fill-mode: both;
     }
     &_close {
-      animation: closeSettingsBtn 0.3s linear 1;
-      animation-fill-mode: both;
+      transition: opacity 0.3s linear;
+      opacity: 0;
     }
     &_left {
       animation: open-settings 0.2s linear 1;
