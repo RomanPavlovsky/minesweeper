@@ -1,12 +1,13 @@
+@import './animation.scss';
 .settings {
-  height: 250px;
   visibility: hidden;
   position: absolute;
   top: 110px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  row-gap: 20px;
 
   &_close {
     animation: closeMenu 0.3s linear 1;
@@ -42,7 +43,7 @@
     align-items: center;
     row-gap: 5px;
   }
-  &__mines {
+  &__difficulty-level {
     letter-spacing: 2.5px;
     font-family: 'Passion One', cursive;
     font-size: 16px;
@@ -53,7 +54,53 @@
     justify-content: center;
     row-gap: 5px;
   }
-  &__minefield {
+  &__audio {
+    cursor: pointer;
+    opacity: 0.7;
+    position: absolute;
+    top: 20px;
+    right: -75px;
+    width: 50px;
+    height: 50px;
+    background: url('./assets/icons/vol1.svg') no-repeat center;
+    background-size: 50%;
+    &:hover {
+      opacity: 1;
+    }
+    &_off {
+      background: url('./assets/icons/vol3.svg') no-repeat center;
+      background-size: 50%;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+.custom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  font-size: 20px;
+  &_open {
+    animation: dropMenu 0.3s linear 1;
+    animation-fill-mode: both;
+  }
+  &__mines {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-size: 16px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &__size {
     letter-spacing: 2.5px;
     font-family: 'Passion One', cursive;
     font-size: 16px;
@@ -63,6 +110,23 @@
     align-items: center;
     justify-content: center;
     row-gap: 5px;
+  }
+  &__apply {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    background-color: rgba(223, 223, 223, 0.719);
+    border-radius: 20px;
+    text-shadow: none;
+    &:hover {
+      cursor: pointer;
+      background-color: #646464;
+    }
   }
 }
 .toggle {
@@ -173,11 +237,20 @@
     }
   }
 }
-.radio {
+.radio-lvl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  row-gap: 5px;
+}
+.radio-size {
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 10px;
+  column-gap: 1px;
+}
+.radio {
   &-checkbox {
     cursor: pointer;
     &:hover .radio-checkbox__custom::before {
@@ -218,5 +291,25 @@
     &__input:checked + .radio-checkbox__custom::before {
       opacity: 1;
     }
+  }
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  &__text {
+    visibility: hidden;
+    width: 120px;
+    background-color: #646464;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 3;
+    top: -5px;
+    left: 105%;
+  }
+  &:hover > .tooltip__text {
+    visibility: visible;
   }
 }

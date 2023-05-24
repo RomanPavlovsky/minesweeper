@@ -29,7 +29,12 @@ export class Sound {
   }
 
   playback() {
-    console.dir(this.audio);
     this.audio.play();
+  }
+  muted() {
+    this.audio.muted = true;
+  }
+  unmuted() {
+    this.audio.muted = false;
   }
 }

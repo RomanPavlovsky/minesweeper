@@ -19,7 +19,12 @@ const action = () => {
   const newGameButton = document.querySelector('.menu__new-game-btn');
   const resultsButton = document.querySelector('.menu__result-btn');
   const themeToggle = document.querySelector('.toggle__input');
-  const minefieldSize = document.querySelector('.radio');
+  const minefieldLvl = document.querySelector('.radio-lvl');
+  const minefieldCustomSize = document.querySelector('.radio-size');
+  const inputBombs = document.querySelector('.mines__input');
+  const inputProgress = document.querySelector('.mines__progress');
+  const audioButton = document.querySelector('.settings__audio');
+  const applyCustom = document.querySelector('.custom__apply');
 
   const soundsArr = [
     new Sound('open'),
@@ -28,15 +33,34 @@ const action = () => {
     new Sound('win'),
     new Sound('boom'),
   ];
-
   let [openAudio, flagAudio, loseAudio, winAudio, boomAudio] = soundsArr;
+  const checkSound = () => {
+    if (state.settings.sound === true) {
+      soundsArr.forEach((elem) => {
+        elem.unmuted();
+      });
+    } else {
+      soundsArr.forEach((elem) => {
+        elem.muted();
+        audioButton.classList.toggle('settings__audio_off');
+      });
+    }
+  };
+  checkSound();
   let isFirstMove = true;
   let matrix;
   let count = Number(state.count);
   let time = Number(state.time);
   let setTime;
+  let isStopAnimationBombs = false;
   const flags = new Set();
+
+  const saveSettings = () => {
+    localStorage.setItem('settings', JSON.stringify(state.settings));
+  };
+
   const newGame = () => {
+    isStopAnimationBombs = true;
     localStorage.removeItem('saveGame');
     state.isSettings = false;
     state.isStartGame = false;
@@ -45,12 +69,10 @@ const action = () => {
     state.isMenu = false;
     state.count = '000';
     state.time = '000';
-    console.log('newGame ');
+    console.log('newGame');
     render();
     action();
   };
-
-  const loadSaveGame = () => {};
   const showResults = (e) => {
     e.stopPropagation();
     const resultModal = `<div class="result"></div>`;
@@ -180,10 +202,6 @@ const action = () => {
       }
     }
   };
-
-  const saveSettings = () => {
-    localStorage.setItem('settings', JSON.stringify(state.settings));
-  };
   const saveGame = () => {
     let cells = document.querySelectorAll('.unit');
     if (!state.isWin && !state.isLose && state.isStartGame) {
@@ -201,7 +219,6 @@ const action = () => {
         };
       });
       localStorage.setItem('saveGame', JSON.stringify(game));
-      // console.log(JSON.parse(localStorage.getItem('saveGame')));
     }
   };
 
@@ -246,30 +263,89 @@ const action = () => {
         );
       }
     }
+  };
+  const selectLvl = (e) => {
+    e.stopPropagation();
+    if (e.target.closest('.radio-checkbox__input')) {
+      console.log('lvl');
+      e.target.setAttribute('checked', 'checked');
+      document.querySelector('.custom').style.visibility = 'hidden';
+      document.querySelector('.custom').classList.remove('custom_open');
+      if (Number(e.target.value) === 10 && e.target.name === 'difficulty') {
+        state.settings.matrixSize = Number(e.target.value);
+        state.settings.bombs = 10;
+        state.settings.isCustom = false;
+        saveSettings();
+        newGame();
+      }
+      if (Number(e.target.value) === 15 && e.target.name === 'difficulty') {
+        state.settings.matrixSize = Number(e.target.value);
+        state.settings.bombs = 45;
+        state.settings.isCustom = false;
+        saveSettings();
+        newGame();
+      }
+      if (Number(e.target.value) === 25 && e.target.name === 'difficulty') {
+        state.settings.matrixSize = Number(e.target.value);
+        state.settings.bombs = 99;
+        state.settings.isCustom = false;
+        saveSettings();
+        newGame();
+      }
+      if (e.target.value === 'custom') {
+        state.settings.isCustom = true;
+        console.log(state.settings.matrixSize);
+        document.querySelector('.custom').style.visibility = 'visible';
+        document.querySelector('.custom').classList.add('custom_open');
+        saveSettings();
+      }
+    }
+  };
+  const selectSize = (e) => {
+    e.stopPropagation();
+    if (e.target.closest('.radio-checkbox__input')) {
+      console.log('size');
+      e.target.setAttribute('checked', 'checked');
+      if (e.target.name === 'minefield') {
+        state.settings.matrixSize = Number(e.target.value);
+      }
+      saveSettings();
+    }
+  };
+  const changeBombs = () => {
+    inputProgress.style.width = inputBombs.value + '%';
+    state.settings.bombs = inputBombs.value;
+    document.querySelector(
+      '.mines__heading'
+    ).textContent = `Mines: ${inputBombs.value}`;
+    saveSettings();
+  };
 
-    let results = [
-      [1, { time: 1, click: 2 }],
-      [2, { time: 5, click: 3 }],
-    ];
-    let json = JSON.stringify(Object.fromEntries(results));
-  };
-  const changeMinefieldSize = (e) => {
-    if (e.target.closest('.radio-checkbox__input')) {
-      e.target.setAttribute('checked', 'checked');
-      state.settings.matrixSize = Number(e.target.value);
-      saveSettings();
-      newGame();
+  const toggleSound = (e) => {
+    e.stopPropagation();
+    console.log('sound');
+    if (audioButton.dataset.sound === 'true') {
+      state.settings.sound = false;
+      audioButton.classList.toggle('settings__audio_off');
+      audioButton.dataset.sound = 'false';
+      soundsArr.forEach((elem) => {
+        elem.muted();
+      });
+    } else {
+      audioButton.classList.toggle('settings__audio_off');
+      audioButton.dataset.sound = 'true';
+      state.settings.sound = true;
+      soundsArr.forEach((elem) => {
+        elem.unmuted();
+      });
     }
-  };
-  const changeBombs = (e) => {
-    if (e.target.closest('.radio-checkbox__input')) {
-      e.target.setAttribute('checked', 'checked');
-      state.settings.matrixSize = Number(e.target.value);
-      saveSettings();
-    }
+    saveSettings();
+    console.log(state.settings);
   };
 
   const swapTheme = (e) => {
+    e.stopPropagation();
+    console.log('theme');
     if (e.target.closest('.toggle__input')) {
       if (state.settings.theme === 'light' && themeToggle.checked === true) {
         state.settings.theme = 'dark';
@@ -285,8 +361,8 @@ const action = () => {
         document.body.style.background =
           'linear-gradient(210deg, #3f87a6, #ebf8e1, #f69d3c)';
       }
-      saveSettings();
     }
+    saveSettings();
   };
   const clickCount = () => {
     count += 1;
@@ -314,6 +390,12 @@ const action = () => {
   const openSettings = () => {
     settingsButton.removeEventListener('click', openSettings);
     if (!state.isSettings) {
+      document.querySelectorAll('.radio-checkbox__input').forEach((elem) => {
+        if (elem.checked && elem.value === 'custom') {
+          document.querySelector('.custom').style.visibility = 'visible';
+          document.querySelector('.custom').classList.add('custom_open');
+        }
+      });
       document.querySelector('.toggle').style.display = 'block';
       state.isSettings = true;
       menuContainer.classList.add('menu_left');
@@ -328,6 +410,8 @@ const action = () => {
         settingsButton.addEventListener('click', openSettings);
       }, 300);
     } else {
+      document.querySelector('.custom').style.visibility = 'hidden';
+      document.querySelector('.custom').classList.remove('custom_open');
       state.isSettings = false;
       menuContainer.style.visibility = 'visible';
       menuContainer.classList.add('menu_right');
@@ -352,6 +436,8 @@ const action = () => {
     }
     if (state.isMenu) {
       state.isMenu = false;
+      document.querySelector('.custom').style.visibility = 'hidden';
+      document.querySelector('.custom').classList.remove('custom_open');
       menu.classList.remove('minesweeper__menu_open');
       menu.classList.add('minesweeper__menu_close');
       newGameButton.classList.add('menu__new-game-btn_close');
@@ -430,13 +516,16 @@ const action = () => {
           minefield.removeEventListener('click', firstMove);
           minefield.removeEventListener('click', move);
           minesweeper.removeEventListener('mouseup', putFlag);
-          setTimeout(() => {
-            const unit = new Unit(elem[0], 'bomb');
-            unit.openUnit(event.target.id);
-          }, delay);
-          delay += 150;
-
-          console.log(delay);
+          const explosion = () => {
+            if (isStopAnimationBombs === true) {
+              clearTimeout(animationTimer);
+            } else {
+              const unit = new Unit(elem[0], 'bomb');
+              unit.openUnit(event.target.id);
+            }
+          };
+          const animationTimer = setTimeout(explosion, delay);
+          delay += 140;
         } else {
           if (cell.dataset.type !== 'flag') {
             const unit = new Unit(elem[0], 'value');
@@ -447,6 +536,7 @@ const action = () => {
       checkWin();
     }
   };
+
   const smileDown = (e) => {
     if (
       !state.isLose &&
@@ -467,19 +557,23 @@ const action = () => {
   minefield.addEventListener('click', move);
   pauseButton.addEventListener('click', openMenu);
   settingsButton.addEventListener('click', openSettings);
-  themeToggle.addEventListener('click', swapTheme);
-  minefieldSize.addEventListener('click', changeMinefieldSize);
   window.addEventListener('beforeunload', saveSettings);
   window.addEventListener('beforeunload', saveGame);
   minesweeper.addEventListener('contextmenu', (e) => {
     e.preventDefault();
   });
   minesweeper.addEventListener('mouseup', putFlag);
-
   minefield.addEventListener('mousedown', smileDown);
   minefield.addEventListener('mouseup', smileUp);
   resultsButton.addEventListener('click', showResults);
   newGameButton.addEventListener('click', newGame);
+  //settings
+  themeToggle.addEventListener('click', swapTheme);
+  minefieldLvl.addEventListener('click', selectLvl);
+  audioButton.addEventListener('click', toggleSound);
+  inputBombs.addEventListener('input', changeBombs);
+  applyCustom.addEventListener('click', newGame);
+  minefieldCustomSize.addEventListener('click', selectSize);
 };
 
 export default action;

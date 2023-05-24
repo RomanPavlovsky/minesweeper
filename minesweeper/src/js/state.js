@@ -4,6 +4,7 @@ export const state = {
     bombs: 10,
     theme: 'light',
     sound: true,
+    isCustom: false,
   },
   isSettings: false,
   isStartGame: false,

@@ -250,12 +250,12 @@
     background-color: transparent;
   }
   &_fail-bomb {
-    background: url('./assets/icons/1.svg') no-repeat center;
+    background: url('./assets/icons/bomb.svg') no-repeat center;
     background-size: cover;
     background-color: rgb(255, 0, 0);
   }
   &_bomb {
-    background: url('./assets/icons/1.svg') no-repeat center;
+    background: url('./assets/icons/bomb.svg') no-repeat center;
     background-size: cover;
     background-color: rgb(235, 194, 12);
     animation: shake 0.8s;
