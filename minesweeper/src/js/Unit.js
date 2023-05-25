@@ -8,7 +8,7 @@ export class Unit {
   }
   addColor(value) {
     if (value === 1) {
-      document.getElementById(this.id).style.color = '#ffffff';
+      document.getElementById(this.id).style.color = 'Grey';
     }
     if (value === 2) {
       document.getElementById(this.id).style.color = ' #4eb153';

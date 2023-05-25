@@ -11,6 +11,8 @@ export const state = {
   isWin: false,
   isLose: false,
   isMenu: false,
+  flagCount: '000',
+  minesCount: '000',
   count: '000',
   time: '000',
 };

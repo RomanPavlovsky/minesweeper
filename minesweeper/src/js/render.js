@@ -14,6 +14,14 @@ const render = () => {
   console.log('load state', state.settings);
   document.body.innerHTML = `  <div class="minesweeper">
   <div class="minesweeper__result"></div>
+  <div class="message"> Привет! <br/> 
+  Немного про проект: <br/>
+  1. Меню открывается по ножатию на Смайлик:) <br/>
+  2. Настройки по ножатию на звездочку в МЕНЮ <br/>
+  3  В результатах отображаются только ПОБЕДЫ <br/>
+  4  Работает автосохранение незаконченной игры <br/>
+      .p.s Перед проверкой почистите localStorage =) <br/>
+             Хорошего дня!</div>
   <div class="minesweeper__header">
     <div class="menu">
       <div class="menu__pause-heading">PAUSE</div>
@@ -91,13 +99,47 @@ const render = () => {
       </div>
     </div>
     <div class="settings-btn"></div>
+    <div class ="minesweeper__flag-container">
+    <div id="flag-icon" class="${
+      state.settings.theme === 'dark'
+        ? 'minesweeper__flag-icon_dark'
+        : 'minesweeper__flag-icon_light'
+    }"></div>
+    <div class="minesweeper__flag">${
+      localStorage.getItem('saveGame') !== null
+        ? JSON.parse(localStorage.getItem('saveGame')).flagCount
+        : state.flagCount
+    }</div>
+    </div>
+    <div class ="minesweeper__mines-container">
+    <div id="mines-icon" class="${
+      state.settings.theme === 'dark'
+        ? 'minesweeper__mines-icon_dark'
+        : 'minesweeper__mines-icon_light'
+    }"></div>
+    <div class="minesweeper__mines">${state.minesCount}</div>
+    </div>
+    <div class ="minesweeper__count-container">
+    <div id="count-icon" class="${
+      state.settings.theme === 'dark'
+        ? 'minesweeper__count-icon_dark'
+        : 'minesweeper__count-icon_light'
+    }"></div>
     <div class="minesweeper__count">${
       localStorage.getItem('saveGame') !== null
         ? JSON.parse(localStorage.getItem('saveGame')).count
         : state.count
     }</div>
+    </div>
     <div class="minesweeper__btn"></div>
+    <div class ="minesweeper__timer-container">
+    <div  id="timer-icon" class="${
+      state.settings.theme === 'dark'
+        ? 'minesweeper__timer-icon_dark'
+        : 'minesweeper__timer-icon_light'
+    }"></div>
     <div class="minesweeper__timer">000</div>
+    </div>
   </div>
   <div class="minesweeper__minefield"></div>
   <div class="minesweeper__menu">
@@ -108,11 +150,17 @@ const render = () => {
   const renderTheme = () => {
     if (state.settings.theme === 'dark') {
       themeToggle.checked = true;
+      document.querySelector('.menu__pause-heading').style.color = '#ffffff';
+      document.querySelector('.settings').style.color = '#ffffff';
+      document.querySelector('.minesweeper__header').style.color = '#ffffff';
       menu.style.backgroundColor = '#091b2431';
       document.body.style.background =
         'linear-gradient(210deg, #193744, #282b26, #1a1108)';
     } else if (state.settings.theme === 'light') {
       themeToggle.checked = false;
+      document.querySelector('.menu__pause-heading').style.color = '#000000';
+      document.querySelector('.settings').style.color = '#000000';
+      document.querySelector('.minesweeper__header').style.color = '#000000';
       menu.style.backgroundColor = '#1ecf2731';
       document.body.style.background =
         'linear-gradient(210deg, #3f87a6, #ebf8e1, #f69d3c)';

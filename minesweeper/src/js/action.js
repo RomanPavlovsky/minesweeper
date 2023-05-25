@@ -10,6 +10,8 @@ const action = () => {
   const minefield = document.querySelector('.minesweeper__minefield');
   const pauseButton = document.querySelector('.minesweeper__btn');
   const counter = document.querySelector('.minesweeper__count');
+  const flagCounter = document.querySelector('.minesweeper__flag');
+  const bombCounter = document.querySelector('.minesweeper__mines');
   const timer = document.querySelector('.minesweeper__timer');
   const menu = document.querySelector('.minesweeper__menu');
   const menuHeading = document.querySelector('.menu__pause-heading');
@@ -38,6 +40,7 @@ const action = () => {
   let isFirstMove = true;
   let matrix;
   let count = Number(state.count);
+  let flagCount = Number(state.flagCount);
   let time = Number(state.time);
   let setTime;
   let isStopAnimationBombs = false;
@@ -64,10 +67,19 @@ const action = () => {
     matrix.matrixState = loadGame.matrix.matrixState;
     matrix.positionsBombs = loadGame.matrix.positionsBombs;
     console.log('state', state);
+    state.flagCount = loadGame.flagCount;
     state.count = loadGame.count;
     count = Number(loadGame.count);
+    flagCount = Number(loadGame.flagCount);
     time = Number(loadGame.time);
+    state.minesCount = loadGame.minesCount;
+    bombCounter.textContent = `${state.minesCount}`;
     setTime = setInterval(startTimer, 1000);
+    matrix.flagsID.forEach((elem) => {
+      if (matrix.positionsBombs.includes(Number(elem))) {
+        bombCounter.textContent = `0${bombCounter.textContent - 1}`;
+      }
+    });
   }
   const checkSound = () => {
     if (state.settings.sound === true) {
@@ -96,6 +108,8 @@ const action = () => {
     state.isMenu = false;
     state.count = '000';
     state.time = '000';
+    state.flagCount = '000';
+    state.minesCount = '000';
     console.log('newGame');
     render();
     action();
@@ -212,6 +226,15 @@ const action = () => {
   };
   const putFlag = (e) => {
     if (e.button === 2 && e.target.closest('.unit_closed')) {
+      flagCount += 1;
+      if (flagCount < 10) {
+        state.flagCount = `00${flagCount}`;
+      } else if (flagCount >= 10 && flagCount < 100) {
+        state.flagCount = `0${flagCount}`;
+      } else if (flagCount >= 100) {
+        state.flagCount = `${flagCount}`;
+      }
+      flagCounter.textContent = state.flagCount;
       flagAudio.playback();
       const unit = new Unit(e.target.id, 'flag');
       unit.putFlag();
@@ -219,8 +242,20 @@ const action = () => {
         flags.add(e.target.id);
       } else {
         matrix.addFlags(`${e.target.id}`);
+        if (matrix.positionsBombs.includes(Number(e.target.id))) {
+          bombCounter.textContent = `0${bombCounter.textContent - 1}`;
+        }
       }
     } else if (e.button === 2 && e.target.closest('.unit_flag')) {
+      flagCount -= 1;
+      if (flagCount < 10) {
+        state.flagCount = `00${flagCount}`;
+      } else if (flagCount >= 10 && flagCount < 100) {
+        state.flagCount = `0${flagCount}`;
+      } else if (flagCount >= 100) {
+        state.flagCount = `${flagCount}`;
+      }
+      flagCounter.textContent = state.flagCount;
       flagAudio.playback();
       const unit = new Unit(e.target.id, 'closed');
       unit.downFlag();
@@ -228,11 +263,15 @@ const action = () => {
         flags.delete(e.target.id);
       } else {
         matrix.deleteFlags(`${e.target.id}`);
+        if (matrix.positionsBombs.includes(Number(e.target.id))) {
+          bombCounter.textContent = `0${
+            Number(bombCounter.textContent.slice(-2)) + 1
+          }`;
+        }
       }
     }
   };
   const saveGame = () => {
-    console.log('123');
     let cells = document.querySelectorAll('.unit');
     if (!state.isWin && !state.isLose && state.isStartGame) {
       let matrixCopy = Object.assign(matrix);
@@ -240,6 +279,8 @@ const action = () => {
         matrix: matrixCopy,
         count: state.count,
         time: state.time,
+        flagCount: state.flagCount,
+        minesCount: state.minesCount,
         cells: {},
       };
       cells.forEach((elem) => {
@@ -380,6 +421,33 @@ const action = () => {
     if (e.target.closest('.toggle__input')) {
       if (state.settings.theme === 'light' && themeToggle.checked === true) {
         state.settings.theme = 'dark';
+        settingsMenu.style.color = '#ffffff';
+        document.querySelector('.menu__pause-heading').style.color = '#ffffff';
+        document.querySelector('.minesweeper__header').style.color = '#ffffff';
+        document
+          .getElementById('count-icon')
+          .classList.add('minesweeper__count-icon_dark');
+        document
+          .getElementById('count-icon')
+          .classList.remove('minesweeper__count-icon_light');
+        document
+          .getElementById('timer-icon')
+          .classList.add('minesweeper__timer-icon_dark');
+        document
+          .getElementById('timer-icon')
+          .classList.remove('minesweeper__timer-icon_light');
+        document
+          .getElementById('flag-icon')
+          .classList.add('minesweeper__flag-icon_dark');
+        document
+          .getElementById('flag-icon')
+          .classList.remove('minesweeper__flag-icon_light');
+        document
+          .getElementById('mines-icon')
+          .classList.add('minesweeper__mines-icon_dark');
+        document
+          .getElementById('mines-icon')
+          .classList.remove('minesweeper__mines-icon_light');
         menu.style.backgroundColor = '#091b2431';
         document.body.style.background =
           'linear-gradient(210deg, #193744, #282b26, #1a1108)';
@@ -387,6 +455,33 @@ const action = () => {
         state.settings.theme === 'dark' &&
         themeToggle.checked === false
       ) {
+        document.querySelector('.menu__pause-heading').style.color = '#000000';
+        settingsMenu.style.color = '#000000';
+        document.querySelector('.minesweeper__header').style.color = '#000000';
+        document
+          .getElementById('count-icon')
+          .classList.add('minesweeper__count-icon_light');
+        document
+          .getElementById('count-icon')
+          .classList.remove('minesweeper__count-icon_dark');
+        document
+          .getElementById('timer-icon')
+          .classList.add('minesweeper__timer-icon_light');
+        document
+          .getElementById('timer-icon')
+          .classList.remove('minesweeper__timer-icon_dark');
+        document
+          .getElementById('flag-icon')
+          .classList.add('minesweeper__flag-icon_light');
+        document
+          .getElementById('flag-icon')
+          .classList.remove('minesweeper__flag-icon_dark');
+        document
+          .getElementById('mines-icon')
+          .classList.add('minesweeper__mines-icon_light');
+        document
+          .getElementById('mines-icon')
+          .classList.remove('minesweeper__mines-icon_dark');
         state.settings.theme = 'light';
         menu.style.backgroundColor = '#1ecf2731';
         document.body.style.background =
@@ -510,6 +605,13 @@ const action = () => {
         matrix.addFlags(elem);
       });
       matrix.createMatrix(event.target.id);
+      bombCounter.textContent = `0${matrix.bombs}`;
+      state.minesCount = `0${matrix.bombs}`;
+      matrix.flagsID.forEach((elem) => {
+        if (matrix.positionsBombs.includes(Number(elem))) {
+          bombCounter.textContent = `0${bombCounter.textContent - 1}`;
+        }
+      });
     }
   };
 
