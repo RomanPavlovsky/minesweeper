@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Passion+One&display=swap');
 
+@import './scss/base/normalize.scss';
 @import './scss/mixins.scss';
-@import './scss/minesweeper.scss';
-@import './scss/settings.scss';
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  user-select: none;
-}
+@import './scss/layout/minesweeper.scss';
+@import './scss/layout/settings.scss';
+@import './scss/components/time-counter.scss';
+@import './scss/components/action-counter.scss';
+@import './scss/components/flag-counter.scss';
+@import './scss/components/bomb-counter.scss';
+@import './scss/base/animation.scss';
 
 body {
   height: 100vh;
@@ -17,5 +16,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(210deg, #3f87a6, #ebf8e1, #f69d3c);
+  background-color: rgb(12, 87, 110);
+}
+.background_light {
+  background: url('./assets/img/bg_light.png');
+  background-size: cover;
+}
+.background_dark {
+  background: url('./assets/img/bg_dark.png');
+  background-size: cover;
 }

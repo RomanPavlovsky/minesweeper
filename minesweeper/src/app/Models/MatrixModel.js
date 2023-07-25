@@ -1,11 +1,10 @@
-export class Matrix {
-  constructor(matrixSize = 10, bombs = 10) {
+export default class MatrixModel {
+  constructor(matrixSize, bombs) {
     this.matrixSize = matrixSize;
     this.bombs = bombs;
     this.matrix = [];
     this.matrixState = {};
     this.positionsBombs = [];
-    this.flagsID = [];
   }
   createMatrix(id) {
     for (let index = 0; index < this.matrixSize; index++) {
@@ -65,20 +64,12 @@ export class Matrix {
       }
     });
   }
-  addFlags(id) {
-    this.flagsID.push(id);
-  }
-  deleteFlags(id) {
-    this.flagsID = this.flagsID.filter((elem) => {
-      return elem !== id;
-    });
-  }
-  getCell(id) {
+  getCell(id, flags) {
     const openSome = (row, col) => {
       const units = [];
       const id = row * this.matrixSize + col + 1;
-      let flag = this.flagsID.includes(`${id}`);
-      if (!flag) {
+      const isHasFlag = flags.has(`${id}`);
+      if (!isHasFlag) {
         this.matrixState[id] = this.matrix[row][col];
         if (row !== 0) {
           units.push([this.matrix[row - 1][col], row - 1, col]);
@@ -115,16 +106,10 @@ export class Matrix {
         });
       }
     };
-
     const col = (id - 1) % this.matrixSize;
     const row = Math.floor((id - 1) / this.matrixSize);
     if (this.matrix[row][col] === '+') {
-      console.log('game over');
-      const bombs = {};
-      this.positionsBombs.forEach((elem) => {
-        bombs[elem] = 'bomb';
-      });
-      return bombs;
+      return { type: 'bomb', bombs: this.positionsBombs };
     } else if (this.matrix[row][col] === 0) {
       openSome(row, col);
     } else {

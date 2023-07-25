@@ -1,4 +1,3 @@
-@import './animation.scss';
 .settings {
   visibility: hidden;
   position: absolute;
@@ -63,13 +62,27 @@
     right: -50px;
     width: 50px;
     height: 50px;
-    background: url('./assets/icons/vol1.svg') no-repeat center;
-    background-size: 50%;
+
     &:hover {
       opacity: 1;
     }
-    &_off {
-      background: url('./assets/icons/vol3.svg') no-repeat center;
+    &_on_light {
+      background: url('./assets/icons/audio_black.svg') no-repeat center;
+      background-size: 50%;
+    }
+    &_on_dark {
+      background: url('./assets/icons/audio_white.svg') no-repeat center;
+      background-size: 50%;
+    }
+    &_off_light {
+      background: url('./assets/icons/audio-muted_black.svg') no-repeat center;
+      background-size: 50%;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    &_off_dark {
+      background: url('./assets/icons/audio-muted_white.svg') no-repeat center;
       background-size: 50%;
       &:hover {
         opacity: 1;
@@ -279,8 +292,8 @@
         top: 50%;
         left: 50%;
         content: '';
-        width: 15px;
-        height: 15px;
+        width: 14px;
+        height: 14px;
         background-color: rgb(255, 255, 255);
         border-radius: 50%;
         transform: translate(-50%, -50%);

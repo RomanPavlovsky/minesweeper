@@ -1,7 +1,5 @@
+import App from './app/App';
 import './main.scss';
 
-import render from './js/render';
-import action from './js/action';
-
-render();
-action();
+const app = new App();
+app.start();

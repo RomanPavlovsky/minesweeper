@@ -1,0 +1,24 @@
+.flag-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flag__icon_light {
+  width: 40px;
+  height: 40px;
+  background: url('./assets/icons/flag-black.svg') no-repeat center;
+  background-size: 60%;
+}
+.flag__icon_dark {
+  width: 40px;
+  height: 40px;
+  background: url('./assets/icons/flag-white.svg') no-repeat center;
+  background-size: 70%;
+}
+.flag__count {
+  width: 70px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
