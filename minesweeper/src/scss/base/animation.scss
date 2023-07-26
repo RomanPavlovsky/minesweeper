@@ -1,0 +1,181 @@
+@keyframes dropPlay {
+  0% {
+    opacity: 0;
+    transform: translate(1px, -400px) rotate(45deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-1px, 15px) rotate(-45deg);
+  }
+  70% {
+    transform: translate(0px, -30px) rotate(25deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}
+@keyframes dropResult {
+  0% {
+    opacity: 0;
+    transform: translate(1px, -450px) rotate(33deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-1px, 0px) rotate(50deg);
+  }
+  70% {
+    transform: translate(0px, -70px) rotate(-5deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}
+@keyframes dropSettings {
+  0% {
+    opacity: 0.5;
+    transform: translate(100px, -450px) rotate(0deg);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(100px, 300px) rotate(-50deg);
+  }
+  60% {
+    transform: translate(100px, 100px) rotate(50deg);
+  }
+  90% {
+    transform: translate(100px, 300px) rotate(0deg);
+  }
+  100% {
+    transform: translate(115px, 300px) rotate(40deg);
+  }
+}
+
+@keyframes openMenu {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes closeMenu {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pause_open {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes swap-menu {
+  0% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-150px);
+  }
+}
+@keyframes swap-settings {
+  0% {
+    transform: translateX(150px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+@keyframes open-settings {
+  0% {
+    transform: translate(115px, 300px) rotate(50deg);
+  }
+  100% {
+    transform: translate(115px, 300px) rotate(-40deg);
+  }
+}
+@keyframes close-settings {
+  0% {
+    transform: translate(115px, 300px) rotate(50deg);
+  }
+  100% {
+    transform: translate(115px, 300px) rotate(140deg);
+  }
+}
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+@keyframes openResults {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes closeResults {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes dropMenu {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(240px);
+  }
+}

@@ -1,0 +1,24 @@
+.action-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.action__icon_light {
+  width: 40px;
+  height: 40px;
+  background: url('./assets/icons/black_click.svg') no-repeat center;
+  background-size: 70%;
+}
+.action__icon_dark {
+  width: 40px;
+  height: 40px;
+  background: url('./assets/icons/white_click.svg') no-repeat center;
+  background-size: 70%;
+}
+.action__count {
+  width: 70px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

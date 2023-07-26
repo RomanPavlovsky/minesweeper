@@ -1,0 +1,334 @@
+.minesweeper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  &__header {
+    position: relative;
+    z-index: 2;
+    font-family: 'Passion One', cursive;
+    font-size: 26px;
+    color: #ffffff;
+    letter-spacing: 0.6rem;
+    width: 320px;
+    height: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+  }
+  &__result {
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Passion One', cursive;
+    font-size: 28px;
+    color: #ffffff;
+    letter-spacing: 1px;
+    height: 100px;
+    &_open {
+      position: relative;
+      z-index: 2;
+      visibility: visible;
+      animation: openResults 0.5s linear 1;
+      animation-fill-mode: both;
+    }
+  }
+  &__counters {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 30px;
+    grid-row-gap: 10px;
+  }
+  #minesweeper__menu-btn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -60%);
+    align-self: center;
+    width: 70px;
+    height: 70px;
+    &:hover {
+      cursor: pointer;
+      background: url('./assets/img/set3.png') no-repeat 9% 10%;
+    }
+  }
+  &__menu-btn_normal {
+    background: url('./assets/img/set3.png') no-repeat 50% 10%;
+  }
+  &__menu-btn_lose {
+    background: url('./assets/img/set3.png') no-repeat 90% 84%;
+  }
+  &__menu-btn_win {
+    background: url('./assets/img/set3.png') no-repeat 90% 10%;
+  }
+  &__menu-btn_wait {
+    background: url('./assets/img/set3.png') no-repeat 90% 47%;
+  }
+  &__minefield {
+    padding: 4px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-column-gap: 2px;
+    grid-row-gap: 2px;
+    border-radius: 10px;
+  }
+  &__menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #1ecf2731;
+    backdrop-filter: blur(15px);
+  }
+  &__menu_open {
+    display: flex;
+    animation: openMenu 0.2s linear 1;
+    animation-fill-mode: both;
+  }
+  &__menu_close {
+    display: flex;
+    animation: closeMenu 0.2s linear 1;
+    animation-fill-mode: both;
+  }
+  .menu {
+    visibility: hidden;
+    height: 250px;
+    position: absolute;
+    top: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    &_right {
+      animation: swap-menu 0.3s linear 1;
+      animation-fill-mode: both;
+      animation-direction: alternate-reverse;
+    }
+    &_left {
+      animation: swap-menu 0.3s linear 1;
+      animation-fill-mode: both;
+      animation-direction: alternate;
+    }
+    &__pause-heading {
+      letter-spacing: 2.5px;
+      font-family: 'Passion One', cursive;
+      font-size: 28px;
+      color: #ffffff;
+
+      &_open {
+        animation: pause_open 0.6s linear 1;
+        animation-fill-mode: both;
+      }
+      &_close {
+        animation: closeMenu 0.3s linear 1;
+        animation-fill-mode: both;
+      }
+    }
+
+    &__new-game-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Passion One', cursive;
+      font-size: 20px;
+      color: #ffffff;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 120px;
+      height: 40px;
+      background-color: rgb(100, 26, 26);
+
+      &:hover {
+        opacity: 0.7;
+      }
+      &_open {
+        animation: dropPlay 0.8s linear 1;
+        animation-fill-mode: both;
+      }
+      &_close {
+        animation: closeMenu 0.3s linear 1;
+        animation-fill-mode: both;
+      }
+    }
+
+    &__result-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Passion One', cursive;
+      font-size: 18px;
+      color: #ffffff;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 130px;
+      height: 30px;
+      background-color: rgb(39, 115, 121);
+      &:hover {
+        opacity: 0.7;
+      }
+      &_open {
+        animation: dropResult 0.6s linear 1;
+        animation-fill-mode: both;
+      }
+      &_close {
+        animation: closeMenu 0.3s linear 1;
+        animation-fill-mode: both;
+      }
+    }
+  }
+
+  .settings-btn {
+    visibility: hidden;
+    opacity: 0.7;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: url('./assets/icons/setting.svg') no-repeat center;
+    background-size: 50%;
+
+    &_open {
+      animation: dropSettings 0.8s linear 1;
+      animation-timing-function: cubic-bezier(0.83, 1.01, 1, 1);
+      animation-fill-mode: both;
+    }
+    &_close {
+      transition: opacity 0.3s linear;
+      opacity: 0;
+    }
+    &_left {
+      animation: open-settings 0.2s linear 1;
+      animation-fill-mode: both;
+    }
+    &_right {
+      animation: close-settings 0.2s linear 1;
+      animation-fill-mode: both;
+    }
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+}
+.unit {
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Passion One', cursive;
+  font-size: 26px;
+  border-radius: 3px;
+  width: 25px;
+  height: 25px;
+
+  @include desktop {
+    @include responsive25(width, 25, 17);
+    @include responsive25(height, 25, 17);
+  }
+
+  &_closed {
+    cursor: pointer;
+    background-color: #13bd1334;
+  }
+  &_flag {
+    cursor: pointer;
+    background: url('./assets/icons/flag.png') no-repeat center;
+    background-size: contain;
+    background-color: #13bd1334;
+  }
+  &_empty {
+    background-color: transparent;
+  }
+  &_value {
+    background-color: transparent;
+  }
+  &_fail-bomb {
+    background: url('./assets/icons/bomb.svg') no-repeat center;
+    background-size: cover;
+    background-color: rgb(255, 0, 0);
+  }
+  &_bomb {
+    background: url('./assets/icons/bomb.svg') no-repeat center;
+    background-size: cover;
+    background-color: rgb(235, 194, 12);
+    animation: shake 0.8s;
+    animation-iteration-count: 1;
+  }
+  &:hover {
+    background-color: rgb(16, 99, 16);
+  }
+}
+.snake {
+  animation: shake 1.3s;
+  animation-iteration-count: 1;
+}
+.result {
+  padding-left: 20px;
+  text-align: center;
+  font-family: 'Passion One', cursive;
+  font-size: 16px;
+  color: #ffffff;
+  letter-spacing: 1px;
+  position: absolute;
+  top: 0px;
+  z-index: 2;
+  margin: 0 auto;
+  width: 400px;
+  height: 400px;
+  background-color: rgb(25, 61, 25);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 50px;
+  &__close-btn {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    top: 0px;
+    right: 0px;
+    position: absolute;
+    background: url('./assets/icons/close-bold.svg') no-repeat center;
+    opacity: 0.7;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &_open {
+    animation: openResults 0.2s linear 1;
+    animation-fill-mode: both;
+  }
+  &_close {
+    animation: closeResults 0.2s linear 1;
+    animation-fill-mode: both;
+  }
+  &__empty {
+    font-size: 28px;
+  }
+  &__heading {
+    text-align: center;
+    font-family: 'Passion One', cursive;
+    font-size: 28px;
+    color: #ffffff;
+    letter-spacing: 1px;
+  }
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-row-gap: 5px;
+  }
+}
