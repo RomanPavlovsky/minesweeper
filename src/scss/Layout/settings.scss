@@ -28,7 +28,6 @@
     letter-spacing: 2.5px;
     font-family: 'Passion One', cursive;
     font-size: 26px;
-    // color: #ffffff;
     animation: pause 0.8s linear 1;
     animation-fill-mode: both;
   }
@@ -37,7 +36,6 @@
     font-family: 'Passion One', cursive;
     font-weight: 200;
     font-size: 16px;
-    // color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,14 +45,13 @@
     letter-spacing: 2.5px;
     font-family: 'Passion One', cursive;
     font-size: 16px;
-    // color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     row-gap: 5px;
   }
-  &__audio {
+  #audio__btn {
     cursor: pointer;
     opacity: 1;
     position: absolute;
@@ -62,31 +59,30 @@
     right: -50px;
     width: 50px;
     height: 50px;
-
     &:hover {
       opacity: 1;
     }
-    &_on_light {
-      background: url('./assets/icons/audio_black.svg') no-repeat center;
-      background-size: 50%;
+  }
+  .audio_btn_on_light {
+    background: url('./assets/icons/audio_black.svg') no-repeat center;
+    background-size: 50%;
+  }
+  .audio_btn_on_dark {
+    background: url('./assets/icons/audio_white.svg') no-repeat center;
+    background-size: 50%;
+  }
+  .audio_btn_off_light {
+    background: url('./assets/icons/audio-muted_black.svg') no-repeat center;
+    background-size: 50%;
+    &:hover {
+      opacity: 1;
     }
-    &_on_dark {
-      background: url('./assets/icons/audio_white.svg') no-repeat center;
-      background-size: 50%;
-    }
-    &_off_light {
-      background: url('./assets/icons/audio-muted_black.svg') no-repeat center;
-      background-size: 50%;
-      &:hover {
-        opacity: 1;
-      }
-    }
-    &_off_dark {
-      background: url('./assets/icons/audio-muted_white.svg') no-repeat center;
-      background-size: 50%;
-      &:hover {
-        opacity: 1;
-      }
+  }
+  .audio_btn_off_dark {
+    background: url('./assets/icons/audio-muted_white.svg') no-repeat center;
+    background-size: 50%;
+    &:hover {
+      opacity: 1;
     }
   }
 }
@@ -133,12 +129,11 @@
     align-items: center;
     width: 100px;
     height: 30px;
-    background-color: rgba(223, 223, 223, 0.719);
     border-radius: 20px;
     text-shadow: none;
     &:hover {
       cursor: pointer;
-      background-color: #646464;
+      opacity: 0.7;
     }
   }
 }
@@ -193,7 +188,7 @@
   &__input:checked + .toggle__custom::before {
     transition: transform 0.4s;
     transform: translateX(19px);
-    background-color: white;
+    background-color: #ffffff;
   }
 }
 .mines {
@@ -282,26 +277,23 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background-color: #646464;
       vertical-align: text-bottom;
-      &:hover:before {
+      &:hover .check {
         opacity: 0.5;
       }
-      &::before {
+      .check {
         position: absolute;
         top: 50%;
         left: 50%;
-        content: '';
         width: 14px;
         height: 14px;
-        background-color: rgb(255, 255, 255);
         border-radius: 50%;
         transform: translate(-50%, -50%);
         opacity: 0;
         transition: opacity 0.1s linear;
       }
     }
-    &__input:checked + .radio-checkbox__custom::before {
+    &__input:checked + .radio-checkbox__custom .check {
       opacity: 1;
     }
   }
@@ -313,7 +305,7 @@
     visibility: hidden;
     width: 120px;
     background-color: #000000;
-    color: #fff;
+    color: #ffffff;
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;

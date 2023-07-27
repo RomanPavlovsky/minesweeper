@@ -16,13 +16,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(12, 87, 110);
 }
-.background_light {
+.bg_light {
   background: url('./assets/img/bg_light.png');
   background-size: cover;
 }
-.background_dark {
+.bg_dark {
   background: url('./assets/img/bg_dark.png');
   background-size: cover;
 }

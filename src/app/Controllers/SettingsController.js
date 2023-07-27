@@ -5,7 +5,7 @@ export default class SettingsController extends LoaderController {
     super(model);
   }
   changeSettings(e) {
-    if (e.target.closest('.settings__audio')) {
+    if (e.target.closest('#audio__btn')) {
       this.model.toggleSound();
       this.model.notify(this.model);
     }

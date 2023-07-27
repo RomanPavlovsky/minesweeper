@@ -24,31 +24,34 @@ export default class SettingsView extends Observer {
   }
   checkTheme(settings) {
     if (settings.theme === 'light') {
+      this.applyCustom.style.backgroundColor = '#dfdfdfdf';
       this.settingsMenu.style.color = '#000000';
+      this.radioBox.forEach((box) => (box.style.backgroundColor = '#dfdfdfdf'));
+      this.radioCheck.forEach(
+        (check) => (check.style.backgroundColor = '#000000')
+      );
       if (settings.sound) {
-        this.audioButton.classList.remove('settings__audio_on_dark');
-        this.audioButton.classList.remove('settings__audio_off_dark');
-        this.audioButton.classList.remove('settings__audio_off_light');
-        this.audioButton.classList.add('settings__audio_on_light');
+        this.audioButton.className = '';
+        this.audioButton.classList.add('audio_btn_on_light');
       } else {
-        this.audioButton.classList.remove('settings__audio_on_dark');
-        this.audioButton.classList.remove('settings__audio_on_light');
-        this.audioButton.classList.remove('settings__audio_off_dark');
-        this.audioButton.classList.add('settings__audio_off_light');
+        this.audioButton.className = '';
+        this.audioButton.classList.add('audio_btn_off_light');
       }
     }
     if (settings.theme === 'dark') {
+      this.applyCustom.style.backgroundColor = '#646464';
+
       this.settingsMenu.style.color = '#ffffff';
+      this.radioBox.forEach((box) => (box.style.backgroundColor = '#646464'));
+      this.radioCheck.forEach(
+        (check) => (check.style.backgroundColor = '#ffffff')
+      );
       if (settings.sound) {
-        this.audioButton.classList.remove('settings__audio_on_light');
-        this.audioButton.classList.remove('settings__audio_off_light');
-        this.audioButton.classList.remove('settings__audio_off_dark');
-        this.audioButton.classList.add('settings__audio_on_dark');
+        this.audioButton.className = '';
+        this.audioButton.classList.add('audio_btn_on_dark');
       } else {
-        this.audioButton.classList.remove('settings__audio_on_light');
-        this.audioButton.classList.remove('settings__audio_off_light');
-        this.audioButton.classList.remove('settings__audio_on_dark');
-        this.audioButton.classList.add('settings__audio_off_dark');
+        this.audioButton.className = '';
+        this.audioButton.classList.add('audio_btn_off_dark');
       }
     }
   }
@@ -102,34 +105,40 @@ export default class SettingsView extends Observer {
         <span class="toggle__custom"></span>
       </label>
     </div>
-    <div class="settings__audio settings__audio_${
-      settings.sound ? 'on' : 'off'
-    }_${settings.theme}" ></div>
+    <div id="audio__btn"></div>
     <div class="settings__difficulty-level">
       <div class="heading">Difficulty level:</div>
       <div class="radio-lvl radio">
         <label class="radio-checkbox tooltip">
           <span class="tooltip__text">Size:10x10 Mines:10</span>
           <input class="radio-checkbox__input" type="radio" name="difficulty" value="10" checked="checked" />
-          <span class="radio-checkbox__custom"></span>
+          <span class="radio-checkbox__custom">
+          <span class="check"></span>
+          </span>
           Easy
         </label>
         <label class="radio-checkbox tooltip">
           <span class="tooltip__text">Size:15x15 Mines:45</span>
           <input class="radio-checkbox__input" type="radio" name="difficulty" value="15" />
-          <span class="radio-checkbox__custom"></span>
+          <span class="radio-checkbox__custom">
+          <span class="check"></span>
+          </span>
           Medium
         </label>
         <label class="radio-checkbox tooltip">
           <span class="tooltip__text">Size:25x25 Mines:99</span>
           <input class="radio-checkbox__input" type="radio" name="difficulty" value="25" />
-          <span class="radio-checkbox__custom"></span>
+          <span class="radio-checkbox__custom">
+          <span class="check"></span>
+          </span>
           Hard
         </label>
         <label class="radio-checkbox tooltip">
           <span class="tooltip__text">Custom settings</span>
           <input class="radio-checkbox__input" type="radio" name="difficulty" value="custom" />
-          <span class="radio-checkbox__custom"></span>
+          <span class="radio-checkbox__custom">
+          <span class="check"></span>
+          </span>
           Custom
         </label>
       </div>
@@ -150,15 +159,18 @@ export default class SettingsView extends Observer {
         <div class="radio-size radio">
           <label class="radio-checkbox">
             <input class="radio-checkbox__input" type="radio" name="minefield" value="10" />
-            <span class="radio-checkbox__custom"></span> 10
+            <span class="radio-checkbox__custom">
+            <span class="check"></span></span> 10
           </label>
           <label class="radio-checkbox">
             <input class="radio-checkbox__input" type="radio" name="minefield" value="15" />
-            <span class="radio-checkbox__custom"></span> 15
+            <span class="radio-checkbox__custom">
+            <span class="check"></span></span> 15
           </label>
           <label class="radio-checkbox">
             <input class="radio-checkbox__input" type="radio" name="minefield" value="25" />
-            <span class="radio-checkbox__custom"></span> 25
+            <span class="radio-checkbox__custom">
+            <span class="check"></span></span> 25
           </label>
         </div>
       </div>
@@ -169,8 +181,10 @@ export default class SettingsView extends Observer {
     this.minefieldCustomSize = document.querySelector('.radio-size');
     this.inputBombs = document.querySelector('.mines__input');
     this.inputProgress = document.querySelector('.mines__progress');
-    this.audioButton = document.querySelector('.settings__audio');
+    this.audioButton = document.getElementById('audio__btn');
     this.applyCustom = document.querySelector('.custom__apply');
+    this.radioBox = document.querySelectorAll('.radio-checkbox__custom');
+    this.radioCheck = document.querySelectorAll('.check');
 
     this.changeSettings = this.settingsController.changeSettings.bind(
       this.settingsController

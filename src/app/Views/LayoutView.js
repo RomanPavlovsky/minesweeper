@@ -27,6 +27,9 @@ export default class LayoutView extends Observer {
     this.minesweeper = document.querySelector('.minesweeper');
     this.resultTitle = document.querySelector('.minesweeper__result');
     this.heading = document.querySelector('.menu__pause-heading');
+    this.settingsButton = document.querySelector('.settings-btn');
+    this.resultButton = document.querySelector('.menu__result-btn');
+    this.newGameButton = document.querySelector('.menu__new-game-btn');
     this.minesweeper.addEventListener('contextmenu', (e) => {
       e.preventDefault();
     });
@@ -61,10 +64,26 @@ export default class LayoutView extends Observer {
   }
   checkTheme(theme) {
     if (theme === 'light') {
+      this.resultButton.style.backgroundColor = '#fbd65d';
+      this.resultButton.style.color = '#000000';
+      this.newGameButton.style.backgroundColor = '#fbd65d';
+      this.newGameButton.style.color = '#000000';
+      this.settingsButton.classList.remove('settings-btn_dark');
+      this.settingsButton.classList.add('settings-btn_light');
+      document.body.classList.remove('bg_dark');
+      document.body.classList.add('bg_light');
       this.menu.style.backgroundColor = '#1ecf2731';
       this.heading.style.color = '#000000';
       this.resultTitle.style.color = '#000000';
     } else {
+      this.resultButton.style.backgroundColor = '#006ea1';
+      this.resultButton.style.color = '#ffffff';
+      this.newGameButton.style.backgroundColor = '#006ea1';
+      this.newGameButton.style.color = '#ffffff';
+      this.settingsButton.classList.remove('settings-btn_light');
+      this.settingsButton.classList.add('settings-btn_dark');
+      document.body.classList.remove('bg_light');
+      document.body.classList.add('bg_dark');
       this.menu.style.backgroundColor = '#091b2431';
       this.heading.style.color = '#ffffff';
       this.resultTitle.style.color = '#ffffff';
