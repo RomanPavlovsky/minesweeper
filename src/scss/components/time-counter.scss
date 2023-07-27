@@ -1,0 +1,23 @@
+.time-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.time__icon_light {
+  width: 40px;
+  height: 40px;
+  background: url('./assets/icons/time-bomb.svg') no-repeat center;
+  background-size: 70%;
+}
+.time__icon_dark {
+  width: 40px;
+  height: 40px;
+  background: url('./assets/icons/time-bomb_white.svg') no-repeat center;
+  background-size: 70%;
+}
+.time__count {
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,12 @@
+@mixin responsive25($property, $startSize, $minSize) {
+  #{$property}: calc(
+    #{$minSize + px} + (#{$startSize} - #{$minSize}) * ((100vw - 500px) /
+          (1270 - 500))
+  );
+}
+
+@mixin desktop() {
+  @media (max-width: 1279px) {
+    @content;
+  }
+}

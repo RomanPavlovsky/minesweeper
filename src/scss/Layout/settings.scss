@@ -1,0 +1,320 @@
+.settings {
+  visibility: hidden;
+  position: absolute;
+  top: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+  color: #000000;
+
+  &_close {
+    animation: closeMenu 0.3s linear 1;
+    animation-fill-mode: both;
+  }
+
+  &_left {
+    animation: swap-settings 0.3s linear 1;
+    animation-fill-mode: both;
+    animation-direction: alternate;
+  }
+  &_right {
+    animation: swap-settings 0.3s linear 1;
+    animation-fill-mode: both;
+    animation-direction: alternate-reverse;
+  }
+  &__heading {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-size: 26px;
+    animation: pause 0.8s linear 1;
+    animation-fill-mode: both;
+  }
+  &__theme {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-weight: 200;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+  }
+  &__difficulty-level {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 5px;
+  }
+  #audio__btn {
+    cursor: pointer;
+    opacity: 1;
+    position: absolute;
+    top: -10px;
+    right: -50px;
+    width: 50px;
+    height: 50px;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .audio_btn_on_light {
+    background: url('./assets/icons/audio_black.svg') no-repeat center;
+    background-size: 50%;
+  }
+  .audio_btn_on_dark {
+    background: url('./assets/icons/audio_white.svg') no-repeat center;
+    background-size: 50%;
+  }
+  .audio_btn_off_light {
+    background: url('./assets/icons/audio-muted_black.svg') no-repeat center;
+    background-size: 50%;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .audio_btn_off_dark {
+    background: url('./assets/icons/audio-muted_white.svg') no-repeat center;
+    background-size: 50%;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+.custom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  font-size: 20px;
+  &_open {
+    animation: dropMenu 0.3s linear 1;
+    animation-fill-mode: both;
+  }
+  &__mines {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-size: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &__size {
+    letter-spacing: 2.5px;
+    font-family: 'Passion One', cursive;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 5px;
+  }
+  &__apply {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+    text-shadow: none;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
+}
+.toggle {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  width: 40px;
+  height: 20px;
+  border-radius: 20px;
+  &::before {
+    content: 'Light';
+    position: absolute;
+    top: 0px;
+    left: -50px;
+  }
+  &::after {
+    content: 'Dark';
+    position: absolute;
+    top: 0px;
+    left: +50px;
+  }
+  &__input {
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+  &__custom {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(223, 223, 223, 0.719);
+    border-radius: 20px;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      height: 16px;
+      width: 16px;
+      background-color: #1d1b1b;
+      border-radius: 8px;
+      transition: all 0.4s;
+    }
+  }
+  &__input:checked + .toggle__custom {
+    background-color: #646464;
+  }
+  &__input:checked + .toggle__custom::before {
+    transition: transform 0.4s;
+    transform: translateX(19px);
+    background-color: #ffffff;
+  }
+}
+.mines {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  width: 120px;
+  &::before {
+    content: '10';
+    position: absolute;
+    top: 5px;
+    left: -25px;
+  }
+  &::after {
+    content: '99';
+    position: absolute;
+    top: 5px;
+    left: 130px;
+  }
+
+  &__line {
+    position: absolute;
+    z-index: -1;
+    background-color: #646464;
+    width: 100%;
+    height: 3px;
+    border-radius: 15px;
+  }
+  &__progress {
+    position: absolute;
+    z-index: -1;
+    background-color: white;
+    height: 3px;
+    border-radius: 15px;
+  }
+  &__input {
+    appearance: none;
+    background-color: white;
+    cursor: pointer;
+    height: 30px;
+    width: 120px;
+    outline: none;
+    background: transparent;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      border: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: white;
+    }
+  }
+}
+.radio-lvl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  row-gap: 5px;
+}
+.radio-size {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1px;
+}
+.radio {
+  &-checkbox {
+    cursor: pointer;
+    &:hover .radio-checkbox__custom::before {
+      opacity: 0.5;
+    }
+    &__input {
+      width: 0;
+      height: 0;
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+    }
+    &__custom {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      vertical-align: text-bottom;
+      &:hover .check {
+        opacity: 0.5;
+      }
+      .check {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.1s linear;
+      }
+    }
+    &__input:checked + .radio-checkbox__custom .check {
+      opacity: 1;
+    }
+  }
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  &__text {
+    visibility: hidden;
+    width: 120px;
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 3;
+    top: -5px;
+    left: 105%;
+  }
+  &:hover > .tooltip__text {
+    visibility: visible;
+  }
+}

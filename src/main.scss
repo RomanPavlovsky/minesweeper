@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Passion+One&display=swap');
+
+@import './scss/base/normalize.scss';
+@import './scss/mixins.scss';
+@import './scss/layout/minesweeper.scss';
+@import './scss/layout/settings.scss';
+@import './scss/components/time-counter.scss';
+@import './scss/components/action-counter.scss';
+@import './scss/components/flag-counter.scss';
+@import './scss/components/bomb-counter.scss';
+@import './scss/base/animation.scss';
+
+body {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bg_light {
+  background: url('./assets/img/bg_light.png');
+  background-size: cover;
+}
+.bg_dark {
+  background: url('./assets/img/bg_dark.png');
+  background-size: cover;
+}
